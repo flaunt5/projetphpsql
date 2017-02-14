@@ -26,4 +26,15 @@ class DefaultController extends Controller
     }
 
 
+
+    /**
+     * @Route("/nojs", name="nojs")
+     */
+    public function nojsAction()
+    {
+        // replace this example code with whatever you need
+        return $this->render('default/nojs.html.twig');
+    }
+
+
 }

@@ -14,9 +14,10 @@ $(document).ready(function() {
                 validators: {
                     stringLength: {
                         min: 2,
+                        message:'Merci de rentrer au moins deux charactères'
                     },
                     notEmpty: {
-                        message: 'Please supply your first name'
+                        message: 'Merci de rentrer votre prenom'
                     }
                 }
             },
@@ -24,19 +25,20 @@ $(document).ready(function() {
                 validators: {
                     stringLength: {
                         min: 2,
+                        message:'Merci de rentrer au moins deux charactères'
                     },
                     notEmpty: {
-                        message: 'Please supply your last name'
+                        message: 'Merci de rentrer votre nom'
                     }
                 }
             },
             email: {
                 validators: {
                     notEmpty: {
-                        message: 'Please supply your email address'
+                        message: 'Merci de rentrer votre adresse e-mail'
                     },
                     emailAddress: {
-                        message: 'Please supply a valid email address'
+                        message: 'Merci de rentrer une adresse e-mail correcte'
                     }
                 }
             },
@@ -45,10 +47,10 @@ $(document).ready(function() {
                     stringLength: {
                         min: 10,
                         max: 200,
-                        message:'Please enter at least 10 characters and no more than 200'
+                        message:'Merci de rentrer entre 10 et 200 charactères'
                     },
                     notEmpty: {
-                        message: 'Please supply a description of your project'
+                        message: 'Merci de rentrer un message'
                     }
                 }
             }
