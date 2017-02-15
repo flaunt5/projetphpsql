@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Itemslist" table="itemslist">
+    <indexes>
+      <index name="infrastructureId" columns="infrastructureId"/>
+      <index name="itemsId" columns="itemsId"/>
+      <index name="horseId" columns="horseId"/>
+    </indexes>
+    <id name="iditemslist" type="integer" column="idItemsList">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="infrastructureid" type="integer" column="infrastructureId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="itemsid" type="integer" column="itemsId" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="horseid" type="integer" column="horseId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

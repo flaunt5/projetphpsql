@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Infrastructure" table="infrastructure">
+    <indexes>
+      <index name="typeIdInfra" columns="typeIdInfra"/>
+      <index name="InfraFamilyId" columns="InfraFamilyId"/>
+    </indexes>
+    <id name="idinfrastructure" type="integer" column="idInfrastructure">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="typeidinfra" type="integer" column="typeIdInfra" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="level" type="boolean" column="level" nullable="false"/>
+    <field name="desc" type="text" column="desc" length="16777215" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="infrafamilyid" type="integer" column="InfraFamilyId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="price" type="decimal" column="price" precision="10" scale="0" nullable="true"/>
+    <field name="ressourceconsumption" type="text" column="ressourceConsumption" length="16777215" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

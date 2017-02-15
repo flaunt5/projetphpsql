@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Competitionprices" table="competitionprices">
+    <indexes>
+      <index name="itemsId" columns="itemsId"/>
+      <index name="competitionId" columns="competitionId"/>
+    </indexes>
+    <id name="idcompetprices" type="integer" column="idCompetPrices">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="itemsid" type="integer" column="itemsId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="competitionid" type="integer" column="competitionId" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="rank" type="boolean" column="rank" nullable="true"/>
+  </entity>
+</doctrine-mapping>
