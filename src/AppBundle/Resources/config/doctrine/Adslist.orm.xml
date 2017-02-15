@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Adslist" table="adslist">
+    <indexes>
+      <index name="adsId" columns="adsId"/>
+      <index name="newsPaperId" columns="newsPaperId"/>
+    </indexes>
+    <id name="idadslist" type="integer" column="idAdsList">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="adsid" type="integer" column="adsId" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="newspaperid" type="integer" column="newsPaperId" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
