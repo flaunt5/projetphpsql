@@ -7,7 +7,8 @@ if ( $( "#submit" ).length ) {
         e.preventDefault();
         var id = $('#id').val(),
             offset = $('#offset').val(),
-            url = "ajaxViewMultipleBank/"+id+"/"+offset;
+            table = $('#table').val(),
+            url = "ajaxViewMultipleBank/"+id+"/"+offset+'/'+table;
         $.ajax({
             url: url,
             method: 'GET',

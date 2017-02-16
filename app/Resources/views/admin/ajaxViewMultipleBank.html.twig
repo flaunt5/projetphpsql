@@ -6,30 +6,22 @@
                aria-describedby="dataTables-example_info" style="width: 100%;">
             <thead>
             <tr role="row">
-                <th class="sorting_asc" tabindex="0" aria-controls="table_test"
-                    rowspan="1" colspan="1" aria-sort="ascending"
-                    aria-label="IdBank"
-                    style="width: 161px;">IdBank
-                </th>
-                <th class="sorting" tabindex="0" aria-controls="table_test"
-                    rowspan="1" colspan="1"
-                    aria-label="Int"
-                    style="width: 196px;">Int
-                </th>
-                <th class="sorting" tabindex="0" aria-controls="table_test"
-                    rowspan="1" colspan="1"
-                    aria-label="Cents"
-                    style="width: 179px;">Cents
-                </th>
+                {% for name in column %}
+                    <th class="sorting_asc" tabindex="0" aria-controls="table_test"
+                        rowspan="1" colspan="1" aria-sort="ascending"
+                        aria-label="{{ name }}"
+                        style="width: 161px;">{{ name }}
+                    </th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
 
-            {% for id in test %}
+            {% for line in table %}
                 <tr class="gradeA even" role="row">
-                    <td class="sorting_1">{{ id.idbank|e }}</td>
-                    <td>{{ id.moneyint|e }}</td>
-                    <td>{{ id.moneycents|e }}</td>
+                    {% for name in column %}
+                        <td>{{ line.[name].0|e }}</td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
 
