@@ -18,3 +18,8 @@
 .idea
 !.gitignore
 composer.phar
+/web/command.sql
+/requetes.sql
+src/*/*/*.php~
+src/AppBundle/Entity/Product.php
+src/AppBundle/Repository/
