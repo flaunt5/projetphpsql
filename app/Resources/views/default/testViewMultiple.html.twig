@@ -1,0 +1,96 @@
+{% extends 'sidebar.html.twig' %}
+
+{% block title %}
+    MMN - Acceuil
+{% endblock %}
+
+
+{% block body %}
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Table de test
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="dataTables-example_wrapper"
+                                 class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_length" id="dataTables-example_length"><label>Show
+                                                <select name="dataTables-example_length"
+                                                        aria-controls="dataTables-example"
+                                                        class="form-control input-sm">
+                                                    <option value="10">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select> entries</label></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div id="dataTables-example_filter" class="dataTables_filter">
+                                            <label>Search:<input type="search" class="form-control input-sm"
+                                                                 placeholder=""
+                                                                 aria-controls="dataTables-example"></label></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table width="100%"
+                                               class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+                                               id="dataTables-example" role="grid"
+                                               aria-describedby="dataTables-example_info" style="width: 100%;">
+                                            <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc" tabindex="0" aria-controls="table_test"
+                                                    rowspan="1" colspan="1" aria-sort="ascending"
+                                                    aria-label="IdBank"
+                                                    style="width: 161px;">IdBank
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="table_test"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Int"
+                                                    style="width: 196px;">Int
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="table_test"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Cents"
+                                                    style="width: 179px;">Cents
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for id in test %}
+                                                <tr class="gradeA even" role="row">
+                                                    <td class="sorting_1">{{ id.idbank|e }}</td>
+                                                    <td>{{ id.moneyint|e }}</td>
+                                                    <td>{{ id.moneycents|e }}</td>
+                                                </tr>
+                                            {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+
+
+{% endblock %}
+
