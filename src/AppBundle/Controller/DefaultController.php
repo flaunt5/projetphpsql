@@ -35,6 +35,7 @@ class DefaultController extends Controller
             ->getManager()
             ->getRepository('AppBundle:Bank')
         ;
+        $id1 -=1;
         $advert = $repository->findBy(array(), null, $limit, $id1);
         if (null === $advert) {
             throw new NotFoundHttpException("L'id de bank ".$id1." n'existe pas.");
