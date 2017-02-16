@@ -1,11 +1,11 @@
- Créer les utilisateurs MySQL suivants :
+ Crï¿½er les utilisateurs MySQL suivants :
 
-1. un administrateur ayant tous les droits sur la base de données (et uniquement sur celle-là) ;
+1. un administrateur ayant tous les droits sur la base de donnï¿½es (et uniquement sur celle-lï¿½) ;
 
 GRANT ALL ON cheval.* TO admin IDENTIFIED BY 'password';
 REVOKE ALL ON cheval.* FROM admin;
 
-2. un administrateur de privilèges n’ayant pas accès aux tables mais pouvant gérer les permissions de l’ensemble des utilisateurs ;
+2. un administrateur de privilï¿½ges nï¿½ayant pas accï¿½s aux tables mais pouvant gï¿½rer les permissions de lï¿½ensemble des utilisateurs ;
 
 GRANT INSERT, UPDATE, DELETE ON mysql.* TO useradmin IDENTIFIED BY 'password' WITH GRANT OPTION;
 
@@ -18,7 +18,7 @@ REVOKE ALL ON mysql.* FROM useradmin;
 tests:
 GRANT USAGE ON cheval.* TO test IDENTIFIED BY 'password'; 		ok
 
-3. un responsable optimisation pouvant gérer l’ensemble des index ;
+3. un responsable optimisation pouvant gï¿½rer lï¿½ensemble des index ;
 
 GRANT INDEX ON cheval.* TO optimiser IDENTIFIED BY 'password'; 
 
@@ -26,24 +26,30 @@ test:
 CREATE INDEX `index_bank` ON `bank`; au moins sur un attribut colonne
 
 
-4. une tâche automatisée pouvant lancer, arrêter ou recharger le serveur MySQL et contrôler les processus utilisateurs ;
+4. une tï¿½che automatisï¿½e pouvant lancer, arrï¿½ter ou recharger le serveur MySQL et contrï¿½ler les processus utilisateurs ;
 
 
 
-5. un développeur pouvant visionner, insérer/modifier et supprimer l’ensemble de l’extension (c.-à-d. des données) 
-de la base de données (mais ne pouvant pas toucher au schéma relationnel, c.-à-d. à la structure des tables) ;
+5. un dï¿½veloppeur pouvant visionner, insï¿½rer/modifier et supprimer lï¿½ensemble de lï¿½extension (c.-ï¿½-d. des donnï¿½es) 
+de la base de donnï¿½es (mais ne pouvant pas toucher au schï¿½ma relationnel, c.-ï¿½-d. ï¿½ la structure des tables) ;
 
 
-6. un modérateur de communauté pouvant modifier ou supprimer l’ensemble des données « joueur » ;
+6. un modï¿½rateur de communautï¿½ pouvant modifier ou supprimer lï¿½ensemble des donnï¿½es ï¿½ joueur ï¿½ ;
 
 
-7. un spécialiste métier pouvant visualiser et modifier l’ensemble des données « cheval » ;
+7. un spï¿½cialiste mï¿½tier pouvant visualiser et modifier lï¿½ensemble des donnï¿½es ï¿½ cheval ï¿½ ;
 
 
-8. un administrateur de concours pouvant visionner, insérer/modifier et supprimer l’ensemble des données « concours » ;
+8. un administrateur de concours pouvant visionner, insï¿½rer/modifier et supprimer lï¿½ensemble des donnï¿½es ï¿½ concours ï¿½ ;
 
 
-9. un éditorialiste pouvant visionner, insérer/modifier et supprimer l’ensemble des données « journal » ;
+9. un ï¿½ditorialiste pouvant visionner, insï¿½rer/modifier et supprimer lï¿½ensemble des donnï¿½es ï¿½ journal ï¿½ ;
 
 
-10. un client pouvant visionner les données « concours » et « journal ».
+10. un client pouvant visionner les donnï¿½es ï¿½ concours ï¿½ et ï¿½ journal ï¿½.
+
+
+
+
+
+
