@@ -25,11 +25,55 @@ class DefaultController extends Controller
         return $this->render('admin/contact.html.twig');
     }
 
+    /**
+     * @Route("/ajaxViewMultipleBank/{id1}/{limit}", name="ajaxViewMultipleBank")
+     */
+    public function ajaxViewMultipleBankAction($id1, $limit)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Bank')
+        ;
+        $advert = $repository->findBy(array(), null, $limit, $id1);
+        if (null === $advert) {
+            throw new NotFoundHttpException("L'id de bank ".$id1." n'existe pas.");
+        }
+        // replace this example code with whatever you need
+        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('test' => $advert));
+    }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("viewMultipleBankAjax", name="viewMultipleBankAjax")
      */
-    public function testAction(Request $request)
+    public function viewMultipleBankAjaxAction()
+    {
+        return $this->render('admin/viewMultipleBankAjax.html.twig');
+    }
+
+    /**
+     * @Route("/nojs", name="nojs")
+     */
+    public function nojsAction()
+    {
+        // replace this example code with whatever you need
+        return $this->render('default/nojs.html.twig');
+    }
+
+
+
+
+
+
+
+
+
+    /*  ROUTES DE TEST  */
+
+
+    /**
+     * @Route("/testAddBank", name="testAddBank")
+     */
+    public function testAddBankAction(Request $request)
     {
         $bank = new Bank();
         $bank->setMoneycents(156);
@@ -42,13 +86,13 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('AppBundle', array('id' => $bank->getId())));
         }
         // replace this example code with whatever you need
-        return $this->render('OCPlatformBundle:Advert:add.html.twig');
+        return $this->render(':admin:index.html.twig');
     }
 
     /**
-     * @Route("/test2/{id}", name="test2")
+     * @Route("/testViewUniqueBankId/{id}", name="testViewUniqueBankId")
      */
-    public function test2Action($id)
+    public function testViewUniqueBankIdAction($id)
     {
         $repository = $this->getDoctrine()
             ->getManager()
@@ -68,12 +112,20 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/nojs", name="nojs")
+     * @Route("/testViewMultiple/{id1}/{limit}", name="testViewMultiple")
      */
-    public function nojsAction()
+    public function testViewMultipleAction($id1, $limit)
     {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Bank')
+        ;
+        $advert = $repository->findBy(array(), null, $limit, $id1);
+        if (null === $advert) {
+            throw new NotFoundHttpException("L'id de bank ".$id1." n'existe pas.");
+        }
         // replace this example code with whatever you need
-        return $this->render('default/nojs.html.twig');
+        return $this->render('testViewMultiple.html.twig', array('test' => $advert));
     }
 
 
