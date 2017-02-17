@@ -7,16 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
+
     /**
      * @Route("/", name="accueil")
      */
     public function accueilAction(Request $request)
     {
-        return $this->render('admin/index.html.twig',array('tables' => $this->getTables()));
+        return $this->render('admin/index.html.twig', array('tables' => $this->getTables()));
     }
 
     /**
@@ -70,7 +72,7 @@ class DefaultController extends Controller
      */
     public function viewMultipleBankAjaxAction($table)
     {
-        return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(),'table' => $table));
+        return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(), 'table' => $table));
     }
 
     /**
