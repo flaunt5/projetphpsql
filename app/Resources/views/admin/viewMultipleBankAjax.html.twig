@@ -1,7 +1,7 @@
 {% extends 'sidebar.html.twig' %}
 
 {% block title %}
-    MMN - Acceuil
+    MMN - Visualisation des tables
 {% endblock %}
 
 
@@ -10,20 +10,28 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-1">
                     <form action="#" id="form_table">
                         <div class="form-group">
-                            <label for="id">id</label>
+                            <label for="id">Id</label>
                             <input type="text" name="id" id="id" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="offset">offset</label>
+                            <label for="offset">Offset</label>
                             <input type="number" name="offset" id="offset" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="table">Table</label>
+                            <select name="table" id="table" class="form-control">
+                                {% for table in tables %}
+                                    <option value="{{ table.Tables_in_symfony_test|e }}">{{ table.Tables_in_symfony_test|e }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <button id="submit" class="btn btn-default">Envoyer</button>
                     </form>
                 </div>
-                <div class="col-lg-9" id="result">
+                <div class="col-lg-11" id="result">
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Bank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,21 +27,29 @@ class DefaultController extends Controller
         return $this->render('admin/contact.html.twig');
     }
     /**
-     * @Route("/ajaxViewMultipleBank/{id1}/{limit}", name="ajaxViewMultipleBank")
+     * @Route("/ajaxViewMultipleBank/{id1}/{limit}/{table}", name="ajaxViewMultipleBank")
      */
-    public function ajaxViewMultipleBankAction($id1, $limit)
+    public function ajaxViewMultipleBankAction($id1, $limit, $table)
     {
+        $table = ucfirst($table);
         $repository = $this->getDoctrine()
             ->getManager()
-            ->getRepository('AppBundle:Bank')
+            ->getRepository("AppBundle:$table")
         ;
         $id1 -=1;
         $advert = $repository->findBy(array(), null, $limit, $id1);
+
+        $conn = $this->get('database_connection');
+        $tables= $conn->fetchAll("SELECT column_name FROM information_schema.COLUMNS WHERE table_name LIKE '$table' ORDER BY ordinal_position");
+        $column=array();
+        foreach ($tables as $value){
+            if($value['column_name'] != strtoupper($value['column_name']))
+                array_push($column,$value['column_name']);
+        }
         if (null === $advert) {
             throw new NotFoundHttpException("L'id de bank ".$id1." n'existe pas.");
         }
-        // replace this example code with whatever you need
-        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('test' => $advert));
+        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $advert, 'column' => $column));
     }
 
     /**
@@ -50,7 +57,9 @@ class DefaultController extends Controller
      */
     public function viewMultipleBankAjaxAction()
     {
-        return $this->render('admin/viewMultipleBankAjax.html.twig');
+        $conn = $this->get('database_connection');
+        $tables= $conn->fetchAll('SHOW TABLES FROM symfony_test');
+        return $this->render('admin/viewMultipleBankAjax.html.twig',array('tables' => $tables));
     }
 
     /**
@@ -132,4 +141,11 @@ class DefaultController extends Controller
     }
 
 
+}
+
+function var_show($var){
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+    die();
 }
