@@ -16,15 +16,13 @@
             </tr>
             </thead>
             <tbody>
-
             {% for line in table %}
                 <tr class="gradeA even" role="row">
-                    {% for name in column %}
-                        <td>{{ line.[name].0|e }}</td>
+                    {% for key,value in line %}
+                        <td>{{ value }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
-
             </tbody>
         </table>
     </div>
