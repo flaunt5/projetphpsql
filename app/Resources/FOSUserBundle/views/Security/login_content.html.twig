@@ -18,10 +18,10 @@
 
                 <fieldset>
                     <div class="form-group">
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" placeholder="{{ 'security.login.username'|trans }}"/>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" placeholder="Nom d'utilisateur"/>
                     </div>
                     <div class="form-group">
-                        <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="{{ 'security.login.password'|trans }}"/>
+                        <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="Mot de passe"/>
                     </div>
                     <div class="checkbox">
                         <label>
@@ -29,7 +29,7 @@
                         </label>
                     </div>
                     <!-- Change this to a button or input when using this as a form -->
-                    <a href="index.html" class="btn btn-lg btn-success btn-block">Connection</a>
+                    <input type="submit" id="_submit" name="_submit" value="Connection" class="btn btn-lg btn-success btn-block" />
                 </fieldset>
             </form>
         </div>
