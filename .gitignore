@@ -24,7 +24,6 @@ composer.lock
 
 *.php~
 
-src/AppBundle/Entity/Product\.php
 
 src/AppBundle/Repository/Entity/ProductRepository\.php
 
@@ -32,4 +31,3 @@ src/AppBundle/Repository/EntityRepository\.php
 
 src/AppBundle/Repository/ProductRepository\.php
 
-composer\.lock

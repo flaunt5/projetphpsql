@@ -27,6 +27,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $_SESSION['roles'] = $this->getRoles();
+        $_COOKIE['roles'] = $this->getRoles();
     }
 }
