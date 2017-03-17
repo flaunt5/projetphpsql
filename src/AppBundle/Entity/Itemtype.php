@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Itemtype
  *
- * @ORM\Table(name="itemtype")
+ * @ORM\Table(name="Itemtype")
  * @ORM\Entity
  */
 class Itemtype

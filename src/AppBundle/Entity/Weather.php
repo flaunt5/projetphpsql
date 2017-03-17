@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Weather
  *
- * @ORM\Table(name="weather")
+ * @ORM\Table(name="Weather")
  * @ORM\Entity
  */
 class Weather

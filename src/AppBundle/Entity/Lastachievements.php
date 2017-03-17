@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lastachievements
  *
- * @ORM\Table(name="lastachievements", indexes={@ORM\Index(name="userId", columns={"userId"})})
+ * @ORM\Table(name="Lastachievements", indexes={@ORM\Index(name="userId", columns={"userId"})})
  * @ORM\Entity
  */
 class Lastachievements

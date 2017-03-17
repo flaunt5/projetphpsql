@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Bank
  *
- * @ORM\Table(name="bank")
+ * @ORM\Table(name="Bank")
  * @ORM\Entity
  */
 class Bank
