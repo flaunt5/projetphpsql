@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Bank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -154,6 +155,18 @@ class DefaultController extends Controller
         }
         // replace this example code with whatever you need
         return $this->render('testViewMultiple.html.twig', array('test' => $advert));
+    }
+
+    /**
+     * @Route("/testUser", name="testUser")
+     */
+    public function testUser(Request $request)
+    {
+        $theUser = $this->get('security.token_storage')->getToken();
+
+        $result = $theUser->getRoles();
+
+        return $this->render(':default:session.html.twig', array('test' => $result));
     }
 
 }
