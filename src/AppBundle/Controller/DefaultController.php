@@ -177,6 +177,15 @@ class DefaultController extends Controller
         return $this->render('testViewMultiple.html.twig', array('test' => $advert));
     }
 
+    /**
+     * @Route("/testMultiUser", name="testMultiUser")
+     */
+    public function testMultiUser()
+    {
+        $journalisteEm = $this->getDoctrine()
+            ->getManager("journaliste");
+    }
+
 
 }
 

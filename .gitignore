@@ -18,6 +18,7 @@
 .idea
 !.gitignore
 composer.phar
+composer.lock
 
 *.sql
 
