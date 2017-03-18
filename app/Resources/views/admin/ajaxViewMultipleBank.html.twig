@@ -6,6 +6,11 @@
                aria-describedby="dataTables-example_info" style="width: 100%;">
             <thead>
             <tr role="row">
+                <th class="sorting_asc" tabindex="0" aria-controls="table_test"
+                    rowspan="1" colspan="1" aria-sort="ascending"
+                    aria-label="Editer"
+                    style="width: 161px;">Editer
+                </th>
                 {% for name in column %}
                     <th class="sorting_asc" tabindex="0" aria-controls="table_test"
                         rowspan="1" colspan="1" aria-sort="ascending"
@@ -16,8 +21,10 @@
             </tr>
             </thead>
             <tbody>
-            {% for line in table %}
+            {% for key2,line in table %}
                 <tr class="gradeA even" role="row">
+                    <td> <div class="col-lg-12"> <button type="button" class="btn btn-outline btn-info viewAction" value="{{ ids[key2] }}" name="{{ table2 }}">Editer</button></div>
+                        <button type="button" class="btn btn-outline btn-danger">Supprimer</button></td>
                     {% for key,value in line %}
                         <td>{{ value }}</td>
                     {% endfor %}

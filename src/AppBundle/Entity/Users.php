@@ -12,6 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Users
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idUser", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $iduser;
     /**
      * @var string
      *
@@ -117,14 +126,7 @@ class Users
      */
     private $bankid;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idUser", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $iduser;
+
 
 
 

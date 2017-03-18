@@ -48,6 +48,13 @@ class DefaultController extends Controller
                 }
             }
         }
+
+        /* Création du tableau d'ids */
+        $ids = array();
+        foreach ($result as $key => $value) {
+            array_push($ids, array_values($result[$key])[0]);
+        }
+
         $conn = $this->get('database_connection'); //connection à la DB
         $tables = $conn->fetchAll("SELECT column_name FROM information_schema.COLUMNS WHERE table_name LIKE '$table' ORDER BY ordinal_position"); //recherche des noms de colone
         $column = array();
@@ -61,7 +68,21 @@ class DefaultController extends Controller
         if (null === $advert) {
             throw new NotFoundHttpException("L'id " . $id1 . " n'existe pas dans la table $table");
         }
-        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column));
+        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column, 'ids' => $ids, 'table2' => $table));
+    }
+
+    /**
+     * @Route("/ajaxViewRow/{id1}/{table}", name="ajaxViewRow")
+     */
+    public function ajaxViewRowAction($id1,$table)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository("AppBundle:$table"); //recuperation du repo
+        $repository->findBy(array('idUser' => $id1));
+        var_show($repository);
+
+        return $this->render('admin/ajaxViewRow.html.twig', array('table' => $result, 'column' => $column));
     }
 
     /**
