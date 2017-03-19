@@ -41,7 +41,6 @@ $("#result").on('click', 'th.tablehead', function (e) {
 $("input#searchInput").on('keyup', function (e) {
 
    var table = $(e.target).data("tablesearch");
-   console.log(table);
    var rows = $("table#" + table + " tr");
    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
        reg = RegExp(val, 'i'),

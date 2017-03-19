@@ -35,28 +35,35 @@ de la base de donn�es (mais ne pouvant pas toucher au sch�ma relationnel, c.
 
 
 6. un mod�rateur de communaut� pouvant modifier ou supprimer l�ensemble des donn�es � joueur � ;
-GRANT SELECT, UPDATE, DELETE ON symfony_test.users TO 'moderator' IDENTIFIED BY 'password';
-GRANT SELECT, UPDATE, DELETE ON symfony_test.bank TO 'moderator' IDENTIFIED BY 'password';
-GRANT SELECT, UPDATE, DELETE ON symfony_test.bankoperations TO 'moderator' IDENTIFIED BY 'password';
+GRANT SELECT, UPDATE, DELETE ON symfony_test.Users TO 'moderator' IDENTIFIED BY 'password';
+GRANT SELECT, UPDATE, DELETE ON symfony_test.Bank TO 'moderator' IDENTIFIED BY 'password';
+GRANT SELECT, UPDATE, DELETE ON symfony_test.Bankoperations TO 'moderator' IDENTIFIED BY 'password';
 
 
 7. un sp�cialiste m�tier pouvant visualiser et modifier l�ensemble des donn�es � cheval � ;
-GRANT SELECT, UPDATE, DELETE ON symfony_test.horse TO 'specialist' IDENTIFIED BY 'password';
-GRANT SELECT, UPDATE, DELETE ON symfony_test.horsemodifierlist TO 'specialist' IDENTIFIED BY 'password';
-GRANT SELECT, UPDATE, DELETE ON symfony_test.horsespecies TO 'specialist' IDENTIFIED BY 'password';
+GRANT SELECT, UPDATE, DELETE ON symfony_test.Horse TO 'specialist' IDENTIFIED BY 'password';
+GRANT SELECT, UPDATE, DELETE ON symfony_test.HorseModifierList TO 'specialist' IDENTIFIED BY 'password';
+GRANT SELECT, UPDATE, DELETE ON symfony_test.HorseSpecies TO 'specialist' IDENTIFIED BY 'password';
 
 
 8. un administrateur de concours pouvant visionner, ins�rer/modifier et supprimer l�ensemble des donn�es � concours � ;
+GRANT SELECT, DELETE, UPDATE ON symfony_test.Competition TO 'competitionadmin' IDENTIFIED BY 'password';
+GRANT SELECT, DELETE, UPDATE ON symfony_test.CompetitionPrices TO 'competitionadmin' IDENTIFIED BY 'password';
 
 
 9. un �ditorialiste pouvant visionner, ins�rer/modifier et supprimer l�ensemble des donn�es � journal � ;
-GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.ads TO 'journaliste' IDENTIFIED BY 'password';
-GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.adslist TO 'journaliste' IDENTIFIED BY 'password';
-GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.weather TO 'journaliste' IDENTIFIED BY 'password';
-GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.newspaper TO 'journaliste' IDENTIFIED BY 'password';
+GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.Ads TO 'journaliste' IDENTIFIED BY 'password';
+GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.AdsList TO 'journaliste' IDENTIFIED BY 'password';
+GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.Weather TO 'journaliste' IDENTIFIED BY 'password';
+GRANT INDEX, INSERT, SELECT, DELETE, UPDATE ON symfony_test.Newspaper TO 'journaliste' IDENTIFIED BY 'password';
 
 
 10. un client pouvant visionner les donn�es � concours � et � journal �.
+GRANT SELECT ON symfony_test.Newspaper TO 'client' IDENTIFIED BY 'password';
+GRANT SELECT ON symfony_test.Ads TO 'client' IDENTIFIED BY 'password';
+GRANT SELECT ON symfony_test.AdsList TO 'client' IDENTIFIED BY 'password';
+GRANT SELECT ON symfony_test.Competition TO 'client' IDENTIFIED BY 'password';
+GRANT SELECT ON symfony_test.CompetitionPrices TO 'client' IDENTIFIED BY 'password';
 
 
 
