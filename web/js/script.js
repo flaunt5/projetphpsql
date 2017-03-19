@@ -15,6 +15,7 @@ $('#submit').on('click',function (e) {
     }).done(function (result) {
         $('#result').fadeOut();
         $('#result').empty().hide().append(result).fadeIn();
+        $("form#search_table").removeClass("hidden");
         $('button.viewAction').on('click',function(){
             var id = this.value,
                 table = this.name,
@@ -32,11 +33,26 @@ $('#submit').on('click',function (e) {
 });
 
 $("#result").on('click', 'th.tablehead', function (e) {
-    var theTarget = $(e.target);
-    var table = $("#"+ theTarget.data("table"));
-    sortTable(table);
-})
+    var theTarget = $(e.target).parents('table').eq(0);
+    sortTable(theTarget);
+});
 
+// trouvé sur http://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table
+$("input#searchInput").on('keyup', function (e) {
+
+   var table = $(e.target).data("tablesearch");
+   console.log(table);
+   var rows = $("table#" + table + " tr");
+   var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+       reg = RegExp(val, 'i'),
+       text;
+   rows.show().filter(function() {
+       text = $(this).text().replace(/\s+/g, ' ');
+       return !reg.test(text);
+   }).hide();
+});
+
+//trouvé sur http://stackoverflow.com/questions/3160277/jquery-table-sort
 function sortTable(table) {
     var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
     this.asc = !this.asc
