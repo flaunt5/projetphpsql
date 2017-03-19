@@ -52,10 +52,6 @@ class SecurityController extends Controller
             ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
             : null;
 
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        //$userRoles = $user->getRoles();
-        $session->set('userRoles', $user);
-
         return $this->renderLogin(array(
             'last_username' => $lastUsername,
             'error' => $error,
@@ -72,7 +68,6 @@ class SecurityController extends Controller
      */
     protected function renderLogin(array $data)
     {
-
         return $this->render('@FOSUser/Security/login.html.twig', $data);
     }
 
@@ -93,4 +88,6 @@ class SecurityController extends Controller
         var_dump($var);
         echo '</pre>';
     }
+
+
 }
