@@ -63,9 +63,50 @@ doctrine:
                 host:     "%database_host%"
                 port:     "%database_port%"
                 dbname:   "%database_name%"
-                user:     "%database_user%"
-                password: "%database_password%"
+                user:     "journaliste"
+                password: "password"
                 charset:  UTF8
+            moderator:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "moderator"
+                password: "password"
+                charset:  UTF8
+            specialist:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "specialist"
+                password: "password"
+                charset:  UTF8
+            competitionadmin:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "competitionadmin"
+                password: "password"
+                charset:  UTF8
+            client:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "client"
+                password: "password"
+                charset:  UTF8
+            anon:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "anon"
+                password: "anon"
+                charset:  UTF8
+
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -77,9 +118,34 @@ doctrine:
                 auto_mapping: true
                 mappings:
                     AppBundle:  ~
-            journaliste:
+            moderator:
                 naming_strategy: doctrine.orm.naming_strategy.underscore
-                connection: journaliste
+                connection: moderator
+                mappings:
+                    AppBundle:  ~
+            specialist:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                connection: specialist
+                mappings:
+                    AppBundle:  ~
+            competitionadmin:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                connection: competitionadmin
+                mappings:
+                    AppBundle:  ~
+            client:
+                 naming_strategy: doctrine.orm.naming_strategy.underscore
+                 connection: client
+                 mappings:
+                     AppBundle:  ~
+            journaliste:
+              naming_strategy: doctrine.orm.naming_strategy.underscore
+              connection: journaliste
+              mappings:
+                  AppBundle:  ~
+            anon:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                connection: anon
                 mappings:
                     AppBundle:  ~
 
