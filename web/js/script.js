@@ -19,14 +19,15 @@
                 var id = this.value,
                     table = this.name,
                     url = "/ajaxViewRow/"+id+'/'+table;
-                $.ajax({
+                /*$.ajax({
                     url: url,
                     method: 'GET',
                     dataType: 'html'
                 }).done(function (result) {
                     $('#result').fadeOut();
                     $('#result').empty().hide().append(result).fadeIn();
-                });
+                });*/
             });
         });
     });
+
