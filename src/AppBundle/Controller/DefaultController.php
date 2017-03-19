@@ -2,22 +2,54 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Bank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
+
+    private $emType = "anon";
+
+    public function setEmType($type){
+        $this->emType = $type;
+    }
+    public function getEmTYpe(){
+        return $this->emType;
+    }
+    private function emTypeVerify()
+    {
+        $userId = $this->getUser();
+        if(!is_string($userId) && $userId != null)
+        {
+            $userId = $userId->getId();
+            if($this->userHasRole("AppBundle", $userId, "ROLE_CHEVAL_ADMIN")) {
+                $this->setEmType("default");
+            } elseif ($this->userHasRole("AppBundle", $userId, "ROLE_JOURNALISTE")) {
+                $this->setEmType("journaliste");
+            } elseif ($this->userHasRole("AppBundle", $userId, "ROLE_MODERATOR")) {
+                $this->setEmType("moderator");
+            } elseif ($this->userHasRole("AppBundle", $userId, "ROLE_COMPETITIONADMIN")) {
+                $this->setEmType("competitionadmin");
+            } elseif ($this->userHasRole("AppBundle", $userId, "ROLE_CLIENT")) {
+                $this->setEmType("client");
+            } elseif ($this->userHasRole("AppBundle", $userId, "ROLE_SPECIALIST")) {
+                $this->setEmType("specialist");
+            } else {
+                $this->setEmType("anon");
+            }
+        }
+    }
 
     /**
      * @Route("/", name="accueil")
      */
     public function accueilAction(Request $request)
     {
+        $this->emTypeVerify();
         return $this->render('admin/index.html.twig', array('tables' => $this->getTables()));
     }
 
@@ -26,32 +58,57 @@ class DefaultController extends Controller
      */
     public function contactAction()
     {
+        $this->emTypeVerify();
         return $this->render('admin/contact.html.twig', array('tables' => $this->getTables()));
     }
 
     /**
      * @Route("/ajaxViewMultipleBank/{id1}/{limit}/{table}", name="ajaxViewMultipleBank")
      */
-    public function ajaxViewMultipleBankAction($id1, $limit, $table)
+    public function ajaxViewMultipleBankAction($id1, $limit, $table, Request $request)
     {
+        $this->emTypeVerify();
         $table = ucfirst($table);
         $repository = $this->getDoctrine()
-            ->getManager()
+            ->getManager($this->emType)
             ->getRepository("AppBundle:$table"); //recuperation du repo
         $id1 -= 1; //ajustement de l'id
         $advert = $repository->findBy(array(), null, $limit, $id1); // recherche dans la DB
         $result = array();
+        $ids = array();
         foreach ($advert as $key => $value) { //mise dans le tableau les objets de la DB, sous forme de string
             array_push($result, (array)$value);
         }
+
+        /* TEST */
+        $conn = $this->get('database_connection'); //connection à la DB
+        $pkey = $conn->fetchAll("SHOW KEYS FROM $table"); //Pkey = primary key
+        $pkeys = array();
+        $nbpkey = 0;
+        foreach ($pkey as $value) {
+            ++$nbpkey;
+            array_push($pkeys, $value['Column_name']);
+        }
+        $temp=array();
+
+
         foreach ($result as $key1 => $value) { //gestion de l'exception de l'objet DateTime
             foreach ($value as $key2 => $value2) {
                 if ($value2 instanceof \DateTime) {
                     $result[$key1][$key2] = $value2->format('Y-m-d H:i:s'); //mise en string du DateTime
                 }
             }
+            /* Création du tableau d'ids */
+            array_push($ids, array_values($result[$key1])[0]);
+
+            foreach ($pkeys as $value3){
+                //array_push($temp, $result[''])
+                $name = 'AppBundle\Entity\\'.strtolower($table).strtolower($value3);
+            }
+
         }
-        $conn = $this->get('database_connection'); //connection à la DB
+
+
         $tables = $conn->fetchAll("SELECT column_name FROM information_schema.COLUMNS WHERE table_name LIKE '$table' ORDER BY ordinal_position"); //recherche des noms de colone
         $column = array();
         foreach ($tables as $value) {//mise dans le tableau des noms de colones
@@ -61,10 +118,25 @@ class DefaultController extends Controller
                 }
             }
         }
+
         if (null === $advert) {
             throw new NotFoundHttpException("L'id " . $id1 . " n'existe pas dans la table $table");
         }
-        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column));
+        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column, 'ids' => $ids, 'table2' => $table));
+    }
+
+    /**
+     * @Route("/ajaxViewRow/{id1}/{table}", name="ajaxViewRow")
+     */
+    public function ajaxViewRowAction($id1, $table)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository("AppBundle:$table"); //recuperation du repo
+        $repository->findBy(array('idUser' => $id1));
+        var_show($repository);
+
+        return $this->render('admin/ajaxViewRow.html.twig', array('table' => $result, 'column' => $column));
     }
 
     /**
@@ -72,6 +144,7 @@ class DefaultController extends Controller
      */
     public function viewMultipleBankAjaxAction($table)
     {
+        $this->emTypeVerify();
         return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(), 'table' => $table));
     }
 
@@ -92,7 +165,8 @@ class DefaultController extends Controller
     // fonction permettant de recuperer toutes les tables disponnibles pour l'utilisateur actuel
     private function getTables()
     {
-        $conn = $this->get('database_connection');
+        $this->emTypeVerify();
+        $conn = $this->getDoctrine()->getManager($this->emType)->getConnection();
         $db = $conn->getDatabase();
         $tables = $conn->fetchAll("SHOW TABLES FROM $db");
         return $tables;
@@ -111,7 +185,7 @@ class DefaultController extends Controller
         $bank = new Bank();
         $bank->setMoneycents(156);
         $bank->setMoneyint(55);
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager($this->emType);
         $em->persist($bank);
         $em->flush();
         if ($request->isMethod('POST')) {
@@ -128,7 +202,7 @@ class DefaultController extends Controller
     public function testViewUniqueBankIdAction($id)
     {
         $repository = $this->getDoctrine()
-            ->getManager()
+            ->getManager($this->emType)
             ->getRepository('AppBundle:Bank');
         $advert = $repository->find($id);
         if (null === $advert) {
@@ -149,7 +223,7 @@ class DefaultController extends Controller
     public function testViewMultipleAction($id1, $limit)
     {
         $repository = $this->getDoctrine()
-            ->getManager()
+            ->getManager($this->emType)
             ->getRepository('AppBundle:Bank');
         $advert = $repository->findBy(array(), null, $limit, $id1);
         if (null === $advert) {
@@ -157,6 +231,56 @@ class DefaultController extends Controller
         }
         // replace this example code with whatever you need
         return $this->render('testViewMultiple.html.twig', array('test' => $advert));
+    }
+
+    private function userHasRole($bundle, $id ,$role) {
+        // Entity manager
+        $em= $this->getDoctrine()->getManager("default");
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('u')
+            ->from($bundle . ':User', 'u') // Change this to the name of your bundle and the name of your mapped user Entity
+            ->where('u.id = :user')
+            ->andWhere('u.roles LIKE :roles')
+            ->setParameter('user', $id)
+            ->setParameter('roles', '%"' . $role . '"%');
+
+        $user = $qb->getQuery()->getResult();
+
+        if(count($user) >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @Route("/testUser", name="testUser")
+     */
+    public function testUser(Request $request)
+    {
+        $theUser = $this->get('security.token_storage')->getToken()->getUser();
+        if(is_string($theUser))
+        {
+            return $this->render(':default:session.html.twig', array('test' => $theUser));
+        } else {
+            $userId= $theUser->getId();
+
+            $stuff = $this->userHasRole("AppBundle", $userId, "ROLE_JOURNALISTE");
+
+            return $this->render(':default:session.html.twig', array('test' => $stuff));
+        }
+    }
+
+    /**
+     * @Route("/testEm", name="testEm")
+     */
+    public function testEm(Request $request)
+    {
+        $this->emTypeVerify();
+        $result = $this->getEmTYpe();
+
+        return $this->render(':default:session.html.twig', array('test' => $result));
     }
 
 
@@ -170,3 +294,5 @@ function var_show($var)
     var_dump($var);
     echo '</pre>';
 }
+
+

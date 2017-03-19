@@ -18,15 +18,11 @@
 .idea
 !.gitignore
 composer.phar
+composer.lock
 
 *.sql
 
 *.php~
 
-src/AppBundle/Entity/Product\.php
 
-src/AppBundle/Repository/Entity/ProductRepository\.php
-
-src/AppBundle/Repository/EntityRepository\.php
-
-src/AppBundle/Repository/ProductRepository\.php
+/app/config/parameters.yml.dist
