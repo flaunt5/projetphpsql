@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Bank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
@@ -64,7 +65,7 @@ class DefaultController extends Controller
     /**
      * @Route("/ajaxViewMultipleBank/{id1}/{limit}/{table}", name="ajaxViewMultipleBank")
      */
-    public function ajaxViewMultipleBankAction($id1, $limit, $table)
+    public function ajaxViewMultipleBankAction($id1, $limit, $table, Request $request)
     {
         $this->emTypeVerify();
         $table = ucfirst($table);
@@ -74,17 +75,40 @@ class DefaultController extends Controller
         $id1 -= 1; //ajustement de l'id
         $advert = $repository->findBy(array(), null, $limit, $id1); // recherche dans la DB
         $result = array();
+        $ids = array();
         foreach ($advert as $key => $value) { //mise dans le tableau les objets de la DB, sous forme de string
             array_push($result, (array)$value);
         }
+
+        /* TEST */
+        $conn = $this->get('database_connection'); //connection à la DB
+        $pkey = $conn->fetchAll("SHOW KEYS FROM $table"); //Pkey = primary key
+        $pkeys = array();
+        $nbpkey = 0;
+        foreach ($pkey as $value) {
+            ++$nbpkey;
+            array_push($pkeys, $value['Column_name']);
+        }
+        $temp=array();
+
+
         foreach ($result as $key1 => $value) { //gestion de l'exception de l'objet DateTime
             foreach ($value as $key2 => $value2) {
                 if ($value2 instanceof \DateTime) {
                     $result[$key1][$key2] = $value2->format('Y-m-d H:i:s'); //mise en string du DateTime
                 }
             }
+            /* Création du tableau d'ids */
+            array_push($ids, array_values($result[$key1])[0]);
+
+            foreach ($pkeys as $value3){
+                //array_push($temp, $result[''])
+                $name = 'AppBundle\Entity\\'.strtolower($table).strtolower($value3);
+            }
+
         }
-        $conn = $this->get('database_connection'); //connection à la DB
+
+
         $tables = $conn->fetchAll("SELECT column_name FROM information_schema.COLUMNS WHERE table_name LIKE '$table' ORDER BY ordinal_position"); //recherche des noms de colone
         $column = array();
         foreach ($tables as $value) {//mise dans le tableau des noms de colones
@@ -94,10 +118,25 @@ class DefaultController extends Controller
                 }
             }
         }
+
         if (null === $advert) {
             throw new NotFoundHttpException("L'id " . $id1 . " n'existe pas dans la table $table");
         }
-        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column));
+        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column, 'ids' => $ids, 'table2' => $table));
+    }
+
+    /**
+     * @Route("/ajaxViewRow/{id1}/{table}", name="ajaxViewRow")
+     */
+    public function ajaxViewRowAction($id1, $table)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository("AppBundle:$table"); //recuperation du repo
+        $repository->findBy(array('idUser' => $id1));
+        var_show($repository);
+
+        return $this->render('admin/ajaxViewRow.html.twig', array('table' => $result, 'column' => $column));
     }
 
     /**
