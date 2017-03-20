@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Infrastructuretype
  *
- * @ORM\Table(name="Infrastructuretype")
+ * @ORM\Table(name="InfrastructureType")
  * @ORM\Entity
  */
 class Infrastructuretype

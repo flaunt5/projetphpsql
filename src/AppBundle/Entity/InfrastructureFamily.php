@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Infrastructurefamily
  *
- * @ORM\Table(name="Infrastructurefamily")
+ * @ORM\Table(name="InfrastructureFamily")
  * @ORM\Entity
  */
 class Infrastructurefamily
