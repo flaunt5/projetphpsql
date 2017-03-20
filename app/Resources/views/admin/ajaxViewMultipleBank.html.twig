@@ -25,10 +25,16 @@
             {% for key2,line in table %}
                 <tr class="gradeA even" role="row">
 
-                    <td><button type="button" class="btn btn-outline btn-info viewAction editrow" value="rowselect{{ key2 }}" data-toggle="modal" data-target=".bs-example-modal-lg">Editer</button>
+                    <td>
+                        <button type="button" class="btn btn-outline btn-info viewAction editrow"
+                                value="rowselect{{ key2 }}" data-toggle="modal" data-target="#editModal">Editer
+                        </button>
 
-                        <div class="col-lg-12"> </div>
-                        <button type="button" class="btn btn-outline btn-danger">Supprimer</button></td>
+                        <div class="col-lg-12"></div>
+                        <button type="button" class="btn btn-outline btn-danger removerow" value="rowselect{{ key2 }}"
+                                data-toggle="modal" data-target="#removeModal">Supprimer
+                        </button>
+                    </td>
                     {% for key,value in line %}
                         <td class="rowselect{{ key2 }}">{{ value }}</td>
                     {% endfor %}
@@ -37,62 +43,123 @@
             </tbody>
         </table>
 
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             id="editModal">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span
+                                    aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Edition d'un tuple</h4>
                     </div>
                     <div class="modal-body">
                         <div class="col-lg-12" id="resultAjax"></div>
-                        <form action="/ajaxEditRow/{{ table_name }}" method="post" enctype="multipart/form-data" role="form" id="formChangeRow">
-                        {% for name in column %}
-                            <div class="form-group">
-                                <label>Edition du champ : {{ name }}</label>
-                                <input type="text" class="form-control formjs" name="{{ name }}">
-                            </div>
-                        {% endfor %}
-                            <input type="submit" type="button" class="btn btn-primary" value="Sauvegarder" id="submitChange">
+                        <form action="/ajaxEditRow/{{ table_name }}" method="post" enctype="multipart/form-data"
+                              role="form" id="formChangeRow">
+                            {% for name in column %}
+                                <div class="form-group">
+                                    <label>Edition du champ : {{ name }}</label>
+                                    <input type="text" class="form-control formjs" name="{{ name }}">
+                                </div>
+                            {% endfor %}
+                            <input type="submit" type="button" class="btn btn-primary" value="Sauvegarder"
+                                   id="submitChange">
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" >Fermer</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Suppression du tuple</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12" id="resultAjaxRemove"></div>
+                        <p class="text-danger">! Attention !</p>
+                        <p>
+                            Vous êtes sur le point de supprimer le tuple !<br>
+                            Pour ce faire cliquez-ici : </p>
+
+                        <form action="/ajaxRemoveRow/{{ table_name }}" method="post" enctype="multipart/form-data"
+                              role="form" id="formRemoveRow">
+                            {% for name in column %}
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control formjshidden" name="{{ name }}">
+                                </div>
+                            {% endfor %}
+                            <input type="submit" type="button" class="btn btn-outline btn-danger"
+                                   value="Confirmer la suppression" id="removeAjax">
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline btn-info" data-dismiss="modal">Annuler</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
 
     </div>
 </div>
 <script>
     $(".editrow").on('click', function (e) {
-        var source = $("."+this.value).first();
+        e.preventDefault();
+        var source = $("." + this.value).first();
         var target = $(".formjs");
-        for(i=0; i < {{ nbInput }}; i++){
-            source.addClass("text-danger");
+        for (i = 0; i < {{ nbInput }}; i++) {
             var temp = target[i];
             temp.value = source.text();
             source = source.next();
         }
     });
 
-    $('#formChangeRow').on('submit', function(e) {
+    $('#formChangeRow').on('submit', function (e) {
         e.preventDefault();
-        var $this = $(this),
-            url = "/ajaxEditRow/{{ table_name }}";
+        var $this = $(this);
         $.ajax({
             url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
             type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
             data: $this.serialize()
         }).done(function (data) {
             $("#resultAjax").append('<pre><p class="text-success">La mise à jour a bien été effectuée</p></pre>');
-            console.debug(data);
         }).fail(function () {
             $("#resultAjax").append('<pre><p class="text-danger">La mise à jour a bien été effectuée</p></pre>');
         });
 
     });
 
+    $(".removerow").on('click', function (e) {
+        e.preventDefault();
+        var source = $("." + this.value).first();
+        var target = $(".formjshidden");
+        for (i = 0; i < {{ nbInput }}; i++) {
+            var temp = target[i];
+            temp.value = source.text();
+            source = source.next();
+        }
+    });
+
+    $("#formRemoveRow").on("submit", function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        console.debug($this);
+        $.ajax({
+            url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+            type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+            data: $this.serialize()
+        }).done(function (data) {
+            $("#resultAjaxRemove").append('<pre><p class="text-success">La suppression à bien été effectuée</p></pre>');
+        }).fail(function () {
+            $("#resultAjaxRemove").append('<pre><p class="text-danger">La suppresson à bien été effectuée</p></pre>');
+        });
+    });
 </script>
