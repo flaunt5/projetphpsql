@@ -15,6 +15,9 @@ $('#submit').on('click',function (e) {
     }).done(function (result) {
         $('#result').fadeOut();
         $('#result').empty().hide().append(result).fadeIn();
+        var target = $("#table").val();
+        $("#table-" + target).tablesorter();
+        $('#search_table').removeClass('hidden');
         $('button.viewAction').on('click',function(){
             var id = this.value,
                 table = this.name,
@@ -31,16 +34,15 @@ $('#submit').on('click',function (e) {
     });
 });
 
-$("#result").on('click', 'th.tablehead', function (e) {
-    var theTarget = $(e.target).parents('table').eq(0);
-    sortTable(theTarget);
-});
+// $("#result").on('click', 'th.tablehead', function (e) {
+//     var theTarget = $(e.target).parents('table').eq(0);
+//     sortTable(theTarget);
+// });
 
 // trouvé sur http://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table
 $("input#searchInput").on('keyup', function (e) {
-
    var table = $(e.target).data("tablesearch");
-   var rows = $("table#" + table + " tr");
+   var rows = $("table#" + table + " tr.result");
    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
        reg = RegExp(val, 'i'),
        text;
