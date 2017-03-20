@@ -373,7 +373,7 @@ class Users
     /**
      * Set desc
      *
-     * @param string $desc
+     * @param string $description
      *
      * @return Users
      */
