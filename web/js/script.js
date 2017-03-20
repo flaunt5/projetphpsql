@@ -66,3 +66,19 @@ function comparer(index) {
 function getCellValue(row, index){
     return $(row).children('td').eq(index).html()
 }
+
+
+function reloadTable() {
+    var id = $('#id').val(),
+        offset = $('#offset').val(),
+        table = $('#table').val(),
+        url = "/ajaxViewMultipleBank/"+id+"/"+offset+'/'+table;
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'html'
+    }).done(function (result) {
+        $('#result').fadeOut();
+        $('#result').empty().hide().append(result).fadeIn();
+    });
+}
