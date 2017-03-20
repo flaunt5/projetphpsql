@@ -83,12 +83,9 @@
         var $this = $(this),
             url = "/ajaxEditRow/{{ table_name }}";
         $.ajax({
-            url: url,
-            method: 'POST',
-            dataType: 'html',
-            data: {
-
-            }
+            url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+            type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+            data: $this.serialize()
         }).done(function (data) {
             $("#resultAjax").append('<pre><p class="text-success">La mise à jour a bien été effectuée</p></pre>');
             console.debug(data);

@@ -37,6 +37,7 @@ class Bank
 
 
 
+
     /**
      * Set moneyint
      *
