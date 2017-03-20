@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Horse
  *
- * @ORM\Table(name="horse", indexes={@ORM\Index(name="speciesId", columns={"speciesId"}), @ORM\Index(name="stablesId", columns={"stablesId"})})
+ * @ORM\Table(name="Horse", indexes={@ORM\Index(name="speciesId", columns={"speciesId"}), @ORM\Index(name="stablesId", columns={"stablesId"})})
  * @ORM\Entity
  */
 class Horse
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idHorse", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idhorse;
+
     /**
      * @var string
      *
@@ -144,15 +153,6 @@ class Horse
      * @ORM\Column(name="state", type="integer", nullable=true)
      */
     private $state;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idHorse", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idhorse;
 
 
 

@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Itemtype
  *
- * @ORM\Table(name="itemtype")
+ * @ORM\Table(name="ItemType")
  * @ORM\Entity
  */
-class Itemtype
+class ItemType
 {
     /**
      * @var integer
@@ -31,11 +31,9 @@ class Itemtype
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=true)
      */
-    private $desc;
-
-
+    private $description;
 
 
 
@@ -70,9 +68,9 @@ class Itemtype
      *
      * @return Itemtype
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -82,9 +80,9 @@ class Itemtype
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**

@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Competition
  *
- * @ORM\Table(name="competition", indexes={@ORM\Index(name="clubId", columns={"clubId"}), @ORM\Index(name="infrastructureId", columns={"infrastructureId"})})
+ * @ORM\Table(name="Competition", indexes={@ORM\Index(name="clubId", columns={"clubId"}), @ORM\Index(name="infrastructureId", columns={"infrastructureId"})})
  * @ORM\Entity
  */
 class Competition
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idCompetition", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idcompetition;
+
     /**
      * @var \DateTime
      *
@@ -46,15 +55,6 @@ class Competition
      * @ORM\Column(name="infrastructureId", type="integer", nullable=false)
      */
     private $infrastructureid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idCompetition", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idcompetition;
 
 
 

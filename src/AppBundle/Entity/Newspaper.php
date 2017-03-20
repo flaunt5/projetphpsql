@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Newspaper
  *
- * @ORM\Table(name="newspaper", indexes={@ORM\Index(name="userId", columns={"userId"}), @ORM\Index(name="achievementId", columns={"achievementId"}), @ORM\Index(name="weatherId", columns={"weatherId"})})
+ * @ORM\Table(name="Newspaper", indexes={@ORM\Index(name="userId", columns={"userId"}), @ORM\Index(name="achievementId", columns={"achievementId"}), @ORM\Index(name="weatherId", columns={"weatherId"})})
  * @ORM\Entity
  */
 class Newspaper
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idNewsPaper", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idnewspaper;
+
     /**
      * @var integer
      *
@@ -32,15 +41,6 @@ class Newspaper
      * @ORM\Column(name="weatherId", type="integer", nullable=false)
      */
     private $weatherid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idNewsPaper", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idnewspaper;
 
 
 

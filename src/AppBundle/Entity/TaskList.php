@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tasklist
  *
- * @ORM\Table(name="tasklist", indexes={@ORM\Index(name="stableId", columns={"stableId"}), @ORM\Index(name="taskId", columns={"taskId"})})
+ * @ORM\Table(name="TaskList", indexes={@ORM\Index(name="stableId", columns={"stableId"}), @ORM\Index(name="taskId", columns={"taskId"})})
  * @ORM\Entity
  */
-class Tasklist
+class TaskList
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idTaskList", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idtasklist;
+
     /**
      * @var integer
      *
@@ -25,15 +34,6 @@ class Tasklist
      * @ORM\Column(name="taskId", type="integer", nullable=false)
      */
     private $taskid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idTaskList", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idtasklist;
 
 
 

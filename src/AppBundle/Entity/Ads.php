@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Ads
  *
- * @ORM\Table(name="ads")
+ * @ORM\Table(name="Ads")
  * @ORM\Entity
  */
 class Ads
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idAds", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idads;
+
     /**
      * @var integer
      *
@@ -32,15 +41,6 @@ class Ads
      * @ORM\Column(name="link", type="integer", nullable=true)
      */
     private $link;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idAds", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idads;
 
 
 

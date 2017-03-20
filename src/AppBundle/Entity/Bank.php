@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Bank
  *
- * @ORM\Table(name="bank")
+ * @ORM\Table(name="Bank")
  * @ORM\Entity
  */
 class Bank
@@ -20,6 +20,7 @@ class Bank
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idbank;
+
     /**
      * @var integer
      *
@@ -33,7 +34,6 @@ class Bank
      * @ORM\Column(name="moneyCents", type="integer", nullable=false)
      */
     private $moneycents;
-
 
 
 

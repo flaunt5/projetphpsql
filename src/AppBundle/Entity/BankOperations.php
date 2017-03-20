@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Bankoperations
  *
- * @ORM\Table(name="bankoperations", indexes={@ORM\Index(name="bankId", columns={"bankId"})})
+ * @ORM\Table(name="BankOperations", indexes={@ORM\Index(name="bankId", columns={"bankId"})})
  * @ORM\Entity
  */
-class Bankoperations
+class BankOperations
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idBankOp", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idbankop;
+
     /**
      * @var \DateTime
      *
@@ -33,14 +42,7 @@ class Bankoperations
      */
     private $bankid;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idBankOp", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idbankop;
+
 
 
 

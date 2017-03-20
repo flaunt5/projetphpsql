@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tasks
  *
- * @ORM\Table(name="tasks", indexes={@ORM\Index(name="infrastructureId", columns={"infrastructureId"}), @ORM\Index(name="horseId", columns={"horseId"})})
+ * @ORM\Table(name="Tasks", indexes={@ORM\Index(name="infrastructureId", columns={"infrastructureId"}), @ORM\Index(name="horseId", columns={"horseId"})})
  * @ORM\Entity
  */
 class Tasks
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idTasks", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idtasks;
+
     /**
      * @var string
      *
@@ -22,9 +31,9 @@ class Tasks
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=false)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=false)
      */
-    private $desc;
+    private $description;
 
     /**
      * @var integer
@@ -46,15 +55,6 @@ class Tasks
      * @ORM\Column(name="frequency", type="integer", nullable=false)
      */
     private $frequency;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idTasks", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idtasks;
 
 
 
@@ -89,9 +89,9 @@ class Tasks
      *
      * @return Tasks
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -101,9 +101,9 @@ class Tasks
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**

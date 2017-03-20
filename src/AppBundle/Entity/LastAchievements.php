@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lastachievements
  *
- * @ORM\Table(name="lastachievements", indexes={@ORM\Index(name="userId", columns={"userId"})})
+ * @ORM\Table(name="LastAchievements", indexes={@ORM\Index(name="userId", columns={"userId"})})
  * @ORM\Entity
  */
-class Lastachievements
+class LastAchievements
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idAchievement", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idachievement;
+
     /**
      * @var integer
      *
@@ -22,9 +31,9 @@ class Lastachievements
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=false)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=false)
      */
-    private $desc;
+    private $description;
 
     /**
      * @var string
@@ -39,15 +48,6 @@ class Lastachievements
      * @ORM\Column(name="value", type="integer", nullable=true)
      */
     private $value;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idAchievement", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idachievement;
 
 
 
@@ -82,9 +82,9 @@ class Lastachievements
      *
      * @return Lastachievements
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -94,9 +94,9 @@ class Lastachievements
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**

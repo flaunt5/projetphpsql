@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Stables
  *
- * @ORM\Table(name="stables", indexes={@ORM\Index(name="userId", columns={"userId"})})
+ * @ORM\Table(name="Stables", indexes={@ORM\Index(name="userId", columns={"userId"})})
  * @ORM\Entity
  */
 class Stables
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idStable", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idstable;
+
     /**
      * @var integer
      *
@@ -25,15 +34,6 @@ class Stables
      * @ORM\Column(name="infrastructureCapacity", type="integer", nullable=false)
      */
     private $infrastructurecapacity;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idStable", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idstable;
 
 
 
