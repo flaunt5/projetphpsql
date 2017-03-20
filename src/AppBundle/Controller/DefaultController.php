@@ -132,6 +132,15 @@ class DefaultController extends Controller
             'table_name' => $table));
     }
 
+
+    /**
+     * @Route("/ajaxViewAddRow/{table}", name="ajaxViewAddRow")
+     */
+    public function ajaxViewAddRowAction($id1, $limit, $table, Request $request)
+    {
+        return $this->render('admin/viewAddRow.html.twig');
+    }
+
     /**
      * @Route("/ajaxEditRow/{table}", name="ajaxEditRow")
      */
@@ -173,6 +182,34 @@ class DefaultController extends Controller
      * @Route("/ajaxRemoveRow/{table}", name="ajaxRemoveRow")
      */
     public function ajaxRemoveRowAction($table, Request $request)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository("AppBundle:$table"); //recuperation du repo
+        $post_data = $request->request->all();
+        $post_data_lower = array();
+        foreach ($post_data as $i => $unique_data){//ajout dans le tableau postdatalower les mêmes valeurs que celles de bases mais avec la clé en minuxcue
+            $post_data_lower[strtolower($i)] = $unique_data;
+        }
+        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
+        $pkey_generated = array();
+        foreach ($pkey as $value){
+            $pkey_generated[$value] = $post_data_lower[$value];
+        }
+        if(empty($pkey_generated))
+            return $this->render('admin/ajaxEditRow.html.twig', array(
+
+            ));
+        $elem = $repository->findOneBy($pkey_generated);
+        $this->getDoctrine()->getManager()->remove($elem);
+        $flush = $this->getDoctrine()->getManager()->flush();
+        return $this->render('admin/ajaxEditRow.html.twig');
+    }
+
+    /**
+     * @Route("/ajaxAddRow/{table}", name="ajaxAddRow")
+     */
+    public function ajaxAddRowAction($table, Request $request)
     {
         $repository = $this->getDoctrine()
             ->getManager()
