@@ -2,8 +2,35 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Bank;
+use AppBundle\Entity\Users;
+use AppBundle\Entity\Ads;
+use AppBundle\Entity\AdsList;
+use AppBundle\Entity\BankOperations;
+use AppBundle\Entity\Club;
+use AppBundle\Entity\Competition;
+use AppBundle\Entity\CompetitionPrices;
+use AppBundle\Entity\Horse;
+use AppBundle\Entity\HorseModifierList;
+use AppBundle\Entity\HorseSpecies;
+use AppBundle\Entity\Infrastructure;
+use AppBundle\Entity\InfrastructureFamily;
+use AppBundle\Entity\InfrastructureList;
+use AppBundle\Entity\InfrastructureType;
+use AppBundle\Entity\Items;
+use AppBundle\Entity\ItemsList;
+use AppBundle\Entity\LastAchievements;
+use AppBundle\Entity\Modifier;
+use AppBundle\Entity\Newspaper;
+use AppBundle\Entity\Product;
+use AppBundle\Entity\Stables;
+use AppBundle\Entity\TaskList;
+use AppBundle\Entity\Tasks;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Weather;
+
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -132,6 +159,15 @@ class DefaultController extends Controller
             'table_name' => $table));
     }
 
+
+    /**
+     * @Route("/ajaxViewAddRow/{table}", name="ajaxViewAddRow")
+     */
+    public function ajaxViewAddRowAction($id1, $limit, $table, Request $request)
+    {
+        return $this->render('admin/viewAddRow.html.twig');
+    }
+
     /**
      * @Route("/ajaxEditRow/{table}", name="ajaxEditRow")
      */
@@ -200,12 +236,46 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/ajaxAddRow/{table}", name="ajaxAddRow")
+     */
+    public function ajaxAddRowAction($table, Request $request)
+    {
+        $post_data = $request->request->all();
+        $post_data_lower = array();
+        foreach ($post_data as $i => $unique_data){//ajout dans le tableau postdatalower les mêmes valeurs que celles de bases mais avec la clé en minuxcue
+            $post_data_lower[strtolower($i)] = $unique_data;
+        }
+        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
+        /*$class = "Bank";
+        var_show($table);
+        $elem = new $class();*/
+
+        $reqTextPrimary = "INSERT INTO $table (";
+        $reqTextSecondary = 'VALUES (';
+        $keys = array_keys($post_data);
+        foreach ($post_data_lower as $i => $value){
+            if(!in_array($i, $pkey)){
+                $reqTextPrimary .= $i.', ';
+                $reqTextSecondary .= '\''.$value.'\', ';
+            }
+        }
+        $reqTextSecondary = substr($reqTextSecondary,0,-2);
+        $reqTextPrimary = substr($reqTextPrimary,0,-2);
+        $reqText = $reqTextPrimary.') '.$reqTextSecondary.')';
+
+        $conn = $this->get('database_connection')->executeQuery($reqText);
+        return $this->render('admin/ajaxEditRow.html.twig');
+    }
+
+    /**
      * @Route("/viewMultipleBankAjax/{table}", name="viewMultipleBankAjax")
      */
     public function viewMultipleBankAjaxAction($table)
     {
         $this->emTypeVerify();
-        return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(), 'table' => $table));
+        $conn = $this->get('database_connection')->executeQuery("SELECT COUNT(*) as nbTuples FROM $table");
+        $nbTuples = $conn->fetch()['nbTuples'];
+        return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(), 'table' => $table, 'nbTuples' => $nbTuples));
     }
 
     /**
@@ -236,25 +306,6 @@ class DefaultController extends Controller
 
     /*  ROUTES DE TEST  */
 
-
-    /**
-     * @Route("/testAddBank", name="testAddBank")
-     */
-    public function testAddBankAction(Request $request)
-    {
-        $bank = new Bank();
-        $bank->setMoneycents(156);
-        $bank->setMoneyint(55);
-        $em = $this->getDoctrine()->getManager($this->emType);
-        $em->persist($bank);
-        $em->flush();
-        if ($request->isMethod('POST')) {
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-            return $this->redirect($this->generateUrl('AppBundle', array('id' => $bank->getId())));
-        }
-        // replace this example code with whatever you need
-        return $this->render(':admin:index.html.twig');
-    }
 
     /**
      * @Route("/testViewUniqueBankId/{id}", name="testViewUniqueBankId")
