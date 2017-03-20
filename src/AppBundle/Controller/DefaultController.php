@@ -95,7 +95,7 @@ class DefaultController extends Controller
             /* Création du tableau d'ids */
             array_push($ids, array_values($result[$key1])[0]);
         }
-        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
+        $pkey = $this->getDoctrine()->getManager($this->emType)->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
         foreach ($advert as $value4){
             $pkeys = array();
             $nbpkey = 0;
@@ -137,8 +137,9 @@ class DefaultController extends Controller
      */
     public function ajaxEditRowAction($table, Request $request)
     {
+        $this->emTypeVerify();
         $repository = $this->getDoctrine()
-            ->getManager()
+            ->getManager($this->emType)
             ->getRepository("AppBundle:$table"); //recuperation du repo
         $post_data = $request->request->all();
         $post_data_lower = array();
@@ -165,7 +166,7 @@ class DefaultController extends Controller
                     $elem->$func_name($unique_data);
             }
         }
-        $flush = $this->getDoctrine()->getManager()->flush();
+        $flush = $this->getDoctrine()->getManager($this->emType)->flush();
         return $this->render('admin/ajaxEditRow.html.twig');
     }
 
@@ -174,8 +175,9 @@ class DefaultController extends Controller
      */
     public function ajaxRemoveRowAction($table, Request $request)
     {
+        $this->emTypeVerify();
         $repository = $this->getDoctrine()
-            ->getManager()
+            ->getManager($this->emType)
             ->getRepository("AppBundle:$table"); //recuperation du repo
         $post_data = $request->request->all();
         $post_data_lower = array();
