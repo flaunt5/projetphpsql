@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Itemtype
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idItemType", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $iditemtype;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=32, nullable=true)
@@ -26,14 +35,7 @@ class Itemtype
      */
     private $desc;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idItemType", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $iditemtype;
+
 
 
 
