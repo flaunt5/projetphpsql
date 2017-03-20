@@ -25,19 +25,77 @@
             {% for key2,line in table %}
                 <tr class="gradeA even" role="row">
 
-                    <td> <form action="">
-                            <input type="hidden" name="{{ table2 }}" value="{{ ids[key2] }}">
-                            <input type="submit" class="btn btn-outline btn-info viewAction" value="Editer">
-                        </form>
+                    <td><button type="button" class="btn btn-outline btn-info viewAction editrow" value="rowselect{{ key2 }}" data-toggle="modal" data-target=".bs-example-modal-lg">Editer</button>
 
                         <div class="col-lg-12"> </div>
                         <button type="button" class="btn btn-outline btn-danger">Supprimer</button></td>
                     {% for key,value in line %}
-                        <td>{{ value }}</td>
+                        <td class="rowselect{{ key2 }}">{{ value }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edition d'un tuple</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12" id="resultAjax"></div>
+                        <form action="/ajaxEditRow/{{ table_name }}" method="post" enctype="multipart/form-data" role="form" id="formChangeRow">
+                        {% for name in column %}
+                            <div class="form-group">
+                                <label>Edition du champ : {{ name }}</label>
+                                <input type="text" class="form-control formjs" name="{{ name }}">
+                            </div>
+                        {% endfor %}
+                            <input type="submit" type="button" class="btn btn-primary" value="Sauvegarder" id="submitChange">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" >Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
+<script>
+    $(".editrow").on('click', function (e) {
+        var source = $("."+this.value).first();
+        var target = $(".formjs");
+        for(i=0; i < {{ nbInput }}; i++){
+            source.addClass("text-danger");
+            var temp = target[i];
+            temp.value = source.text();
+            source = source.next();
+        }
+    });
+
+    $('#formChangeRow').on('submit', function(e) {
+        e.preventDefault();
+        var $this = $(this),
+            url = "/ajaxEditRow/{{ table_name }}";
+        $.ajax({
+            url: url,
+            method: 'POST',
+            dataType: 'html',
+            data: {
+
+            }
+        }).done(function (data) {
+            $("#resultAjax").append('<pre><p class="text-success">La mise à jour a bien été effectuée</p></pre>');
+            console.debug(data);
+        }).fail(function () {
+            $("#resultAjax").append('<pre><p class="text-danger">La mise à jour a bien été effectuée</p></pre>');
+        });
+
+    });
+
+</script>
