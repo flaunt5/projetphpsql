@@ -31,9 +31,9 @@ class LastAchievements
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=false)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=false)
      */
-    private $desc;
+    private $description;
 
     /**
      * @var string
@@ -82,9 +82,9 @@ class LastAchievements
      *
      * @return Lastachievements
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -94,9 +94,9 @@ class LastAchievements
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**
