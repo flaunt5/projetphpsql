@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="InfrastructureFamily")
  * @ORM\Entity
  */
-class Infrastructurefamily
+class InfrastructureFamily
 {
     /**
      * @var string

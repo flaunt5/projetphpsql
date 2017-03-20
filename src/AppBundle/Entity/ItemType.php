@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="ItemType")
  * @ORM\Entity
  */
-class Itemtype
+class ItemType
 {
     /**
      * @var string

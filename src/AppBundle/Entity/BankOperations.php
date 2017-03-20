@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="BankOperations", indexes={@ORM\Index(name="bankId", columns={"bankId"})})
  * @ORM\Entity
  */
-class Bankoperations
+class BankOperations
 {
     /**
      * @var \DateTime

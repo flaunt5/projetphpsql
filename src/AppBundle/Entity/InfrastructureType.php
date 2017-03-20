@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="InfrastructureType")
  * @ORM\Entity
  */
-class Infrastructuretype
+class InfrastructureType
 {
     /**
      * @var integer

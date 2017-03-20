@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="AdsList", indexes={@ORM\Index(name="adsId", columns={"adsId"}), @ORM\Index(name="newsPaperId", columns={"newsPaperId"})})
  * @ORM\Entity
  */
-class Adslist
+class AdsList
 {
     /**
      * @var integer
