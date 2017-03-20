@@ -271,9 +271,9 @@ class DefaultController extends Controller
     public function viewMultipleBankAjaxAction($table)
     {
         $this->emTypeVerify();
-        /*$nbElem = $this->getDoctrine()->getManager()->getRepository("AppBundle:$table")->getNb();
-        var_show($nbElem);*/
-        return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(), 'table' => $table));
+        $conn = $this->get('database_connection')->executeQuery("SELECT COUNT(*) as nbTuples FROM $table");
+        $nbTuples = $conn->fetch()['nbTuples'];
+        return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(), 'table' => $table, 'nbTuples' => $nbTuples));
     }
 
     /**
