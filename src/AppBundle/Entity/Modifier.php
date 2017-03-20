@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Modifier
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idModifier", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idmodifier;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=32, nullable=true)
@@ -22,9 +31,9 @@ class Modifier
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=false)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=false)
      */
-    private $desc;
+    private $description;
 
     /**
      * @var string
@@ -32,15 +41,6 @@ class Modifier
      * @ORM\Column(name="type", type="string", length=32, nullable=false)
      */
     private $type;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idModifier", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idmodifier;
 
 
 
@@ -75,9 +75,9 @@ class Modifier
      *
      * @return Modifier
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -87,9 +87,9 @@ class Modifier
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**

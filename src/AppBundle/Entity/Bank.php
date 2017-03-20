@@ -15,6 +15,15 @@ class Bank
     /**
      * @var integer
      *
+     * @ORM\Column(name="idBank", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idbank;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="moneyInt", type="integer", nullable=false)
      */
     private $moneyint;
@@ -26,14 +35,6 @@ class Bank
      */
     private $moneycents;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idBank", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idbank;
 
 
 

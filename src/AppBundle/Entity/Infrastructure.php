@@ -15,6 +15,15 @@ class Infrastructure
     /**
      * @var integer
      *
+     * @ORM\Column(name="idInfrastructure", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idinfrastructure;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="typeIdInfra", type="integer", nullable=false)
      */
     private $typeidinfra;
@@ -29,9 +38,9 @@ class Infrastructure
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=true)
      */
-    private $desc;
+    private $description;
 
     /**
      * @var integer
@@ -53,15 +62,6 @@ class Infrastructure
      * @ORM\Column(name="ressourceConsumption", type="text", length=16777215, nullable=true)
      */
     private $ressourceconsumption;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idInfrastructure", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idinfrastructure;
 
 
 
@@ -120,9 +120,9 @@ class Infrastructure
      *
      * @return Infrastructure
      */
-    public function setDesc($desc)
+    public function setDesc($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -132,9 +132,9 @@ class Infrastructure
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**

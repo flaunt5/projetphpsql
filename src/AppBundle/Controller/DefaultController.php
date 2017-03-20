@@ -7,6 +7,7 @@ use AppBundle\Entity\Bank;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
@@ -81,15 +82,8 @@ class DefaultController extends Controller
         }
 
         /* TEST */
-        $conn = $this->get('database_connection'); //connection à la DB
-        $pkey = $conn->fetchAll("SHOW KEYS FROM $table"); //Pkey = primary key
-        $pkeys = array();
-        $nbpkey = 0;
-        foreach ($pkey as $value) {
-            ++$nbpkey;
-            array_push($pkeys, $value['Column_name']);
-        }
         $temp=array();
+
 
 
         foreach ($result as $key1 => $value) { //gestion de l'exception de l'objet DateTime
@@ -100,15 +94,22 @@ class DefaultController extends Controller
             }
             /* Création du tableau d'ids */
             array_push($ids, array_values($result[$key1])[0]);
-
-            foreach ($pkeys as $value3){
-                //array_push($temp, $result[''])
-                $name = 'AppBundle\Entity\\'.strtolower($table).strtolower($value3);
+        }
+        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
+        foreach ($advert as $value4){
+            $pkeys = array();
+            $nbpkey = 0;
+            foreach ($pkey as $value3) {
+                ++$nbpkey;
+                array_push($pkeys, $value3);
             }
-
+            //var_show($pkeys);
+            $funcname = 'get'.$pkeys[0];
+            //var_show($value4->$funcname());
         }
 
 
+        $conn = $this->get('database_connection'); //connection à la DB
         $tables = $conn->fetchAll("SELECT column_name FROM information_schema.COLUMNS WHERE table_name LIKE '$table' ORDER BY ordinal_position"); //recherche des noms de colone
         $column = array();
         foreach ($tables as $value) {//mise dans le tableau des noms de colones
@@ -122,21 +123,78 @@ class DefaultController extends Controller
         if (null === $advert) {
             throw new NotFoundHttpException("L'id " . $id1 . " n'existe pas dans la table $table");
         }
-        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column, 'ids' => $ids, 'table2' => $table));
+        return $this->render('admin/ajaxViewMultipleBank.html.twig', array(
+            'table' => $result,
+            'column' => $column,
+            'ids' => $ids,
+            'table2' => $table,
+            'nbInput' => count($column),
+            'table_name' => $table));
     }
 
     /**
-     * @Route("/ajaxViewRow/{id1}/{table}", name="ajaxViewRow")
+     * @Route("/ajaxEditRow/{table}", name="ajaxEditRow")
      */
-    public function ajaxViewRowAction($id1, $table)
+    public function ajaxEditRowAction($table, Request $request)
     {
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository("AppBundle:$table"); //recuperation du repo
-        $repository->findBy(array('idUser' => $id1));
-        var_show($repository);
+        $post_data = $request->request->all();
+        $post_data_lower = array();
+        foreach ($post_data as $i => $unique_data){//ajout dans le tableau postdatalower les mêmes valeurs que celles de bases mais avec la clé en minuxcue
+            $post_data_lower[strtolower($i)] = $unique_data;
+        }
+        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
+        $pkey_generated = array();
+        foreach ($pkey as $value){
+            $pkey_generated[$value] = $post_data_lower[$value];
+        }
+        if(empty($pkey_generated))
+            return $this->render('admin/ajaxEditRow.html.twig', array(
 
-        return $this->render('admin/ajaxViewRow.html.twig', array('table' => $result, 'column' => $column));
+            ));
+        $elem = $repository->findOneBy($pkey_generated);
+        foreach ($post_data as $i => $unique_data){
+            if(!array_key_exists(strtolower($i), $pkey_generated)){
+                $func_name = 'set'.ucfirst(strtolower($i));
+                if(\DateTime::createFromFormat('Y-m-d H:i:s', $unique_data) != false){
+                    $date = new \DateTime($unique_data);
+                    $elem->$func_name($date);
+                }else
+                    $elem->$func_name($unique_data);
+            }
+        }
+        $flush = $this->getDoctrine()->getManager()->flush();
+        return $this->render('admin/ajaxEditRow.html.twig');
+    }
+
+    /**
+     * @Route("/ajaxRemoveRow/{table}", name="ajaxRemoveRow")
+     */
+    public function ajaxRemoveRowAction($table, Request $request)
+    {
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository("AppBundle:$table"); //recuperation du repo
+        $post_data = $request->request->all();
+        $post_data_lower = array();
+        foreach ($post_data as $i => $unique_data){//ajout dans le tableau postdatalower les mêmes valeurs que celles de bases mais avec la clé en minuxcue
+            $post_data_lower[strtolower($i)] = $unique_data;
+        }
+        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
+        $pkey_generated = array();
+        foreach ($pkey as $value){
+            $pkey_generated[$value] = $post_data_lower[$value];
+        }
+        if(empty($pkey_generated))
+            return $this->render('admin/ajaxEditRow.html.twig', array(
+
+            ));
+        $elem = $repository->findOneBy($pkey_generated);
+        $this->getDoctrine()->getManager()->remove($elem);
+        $flush = $this->getDoctrine()->getManager()->flush();
+        return $this->render('admin/ajaxEditRow.html.twig');
     }
 
     /**

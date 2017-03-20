@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Horsespecies
  *
- * @ORM\Table(name="Horsespecies")
+ * @ORM\Table(name="HorseSpecies")
  * @ORM\Entity
  */
-class Horsespecies
+class HorseSpecies
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idHorseSpecies", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idhorsespecies;
+
     /**
      * @var string
      *
@@ -22,18 +31,9 @@ class Horsespecies
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=false)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=false)
      */
-    private $desc;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idHorseSpecies", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idhorsespecies;
+    private $description;
 
 
 
@@ -68,9 +68,9 @@ class Horsespecies
      *
      * @return Horsespecies
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -80,9 +80,9 @@ class Horsespecies
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**

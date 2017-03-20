@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Competition
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idCompetition", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idcompetition;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="startDate", type="date", nullable=true)
@@ -46,15 +55,6 @@ class Competition
      * @ORM\Column(name="infrastructureId", type="integer", nullable=false)
      */
     private $infrastructureid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idCompetition", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idcompetition;
 
 
 

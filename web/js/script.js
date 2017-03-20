@@ -15,19 +15,18 @@ $('#submit').on('click',function (e) {
     }).done(function (result) {
         $('#result').fadeOut();
         $('#result').empty().hide().append(result).fadeIn();
-        $("form#search_table").removeClass("hidden");
         $('button.viewAction').on('click',function(){
             var id = this.value,
                 table = this.name,
                 url = "/ajaxViewRow/"+id+'/'+table;
-            $.ajax({
+            /*$.ajax({
                 url: url,
                 method: 'GET',
                 dataType: 'html'
             }).done(function (result) {
                 $('#result').fadeOut();
                 $('#result').empty().hide().append(result).fadeIn();
-            });
+            });*/
         });
     });
 });

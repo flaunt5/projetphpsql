@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Infrastructurefamily
  *
- * @ORM\Table(name="Infrastructurefamily")
+ * @ORM\Table(name="InfrastructureFamily")
  * @ORM\Entity
  */
-class Infrastructurefamily
+class InfrastructureFamily
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idInfraFamily", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idinfrafamily;
+
     /**
      * @var string
      *
@@ -22,18 +31,9 @@ class Infrastructurefamily
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=true)
      */
-    private $desc;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idInfraFamily", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idinfrafamily;
+    private $description;
 
 
 
@@ -68,9 +68,9 @@ class Infrastructurefamily
      *
      * @return Infrastructurefamily
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -80,9 +80,9 @@ class Infrastructurefamily
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**

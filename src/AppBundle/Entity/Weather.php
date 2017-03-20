@@ -12,6 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Weather
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
     /**
      * @var string
      *
@@ -32,15 +42,6 @@ class Weather
      * @ORM\Column(name="temperature", type="decimal", precision=10, scale=0, nullable=false)
      */
     private $temperature;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
 
 

@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Competitionprices
  *
- * @ORM\Table(name="Competitionprices", indexes={@ORM\Index(name="itemsId", columns={"itemsId"}), @ORM\Index(name="competitionId", columns={"competitionId"})})
+ * @ORM\Table(name="CompetitionPrices", indexes={@ORM\Index(name="itemsId", columns={"itemsId"}), @ORM\Index(name="competitionId", columns={"competitionId"})})
  * @ORM\Entity
  */
-class Competitionprices
+class CompetitionPrices
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idCompetPrices", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idcompetprices;
+
     /**
      * @var integer
      *
@@ -32,15 +41,6 @@ class Competitionprices
      * @ORM\Column(name="rank", type="boolean", nullable=true)
      */
     private $rank;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idCompetPrices", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idcompetprices;
 
 
 

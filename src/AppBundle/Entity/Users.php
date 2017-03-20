@@ -94,9 +94,9 @@ class Users
     /**
      * @var string
      *
-     * @ORM\Column(name="desc", type="text", length=16777215, nullable=true)
+     * @ORM\Column(name="description", type="text", length=16777215, nullable=true)
      */
-    private $desc;
+    private $description;
 
     /**
      * @var string
@@ -373,13 +373,13 @@ class Users
     /**
      * Set desc
      *
-     * @param string $desc
+     * @param string $description
      *
      * @return Users
      */
-    public function setDesc($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -389,9 +389,9 @@ class Users
      *
      * @return string
      */
-    public function getDesc()
+    public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**
