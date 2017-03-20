@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class HorseSpecies
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idHorseSpecies", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idhorsespecies;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=32, nullable=false)
@@ -25,15 +34,6 @@ class HorseSpecies
      * @ORM\Column(name="desc", type="text", length=16777215, nullable=false)
      */
     private $desc;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idHorseSpecies", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idhorsespecies;
 
 
 

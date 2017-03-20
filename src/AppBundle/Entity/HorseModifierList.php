@@ -15,6 +15,15 @@ class HorseModifierList
     /**
      * @var integer
      *
+     * @ORM\Column(name="idHorseModifierList", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idhorsemodifierlist;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="horseId", type="integer", nullable=false)
      */
     private $horseid;
@@ -26,14 +35,7 @@ class HorseModifierList
      */
     private $modifierid;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idHorseModifierList", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idhorsemodifierlist;
+
 
 
 

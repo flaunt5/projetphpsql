@@ -15,6 +15,15 @@ class CompetitionPrices
     /**
      * @var integer
      *
+     * @ORM\Column(name="idCompetPrices", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idcompetprices;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="itemsId", type="integer", nullable=true)
      */
     private $itemsid;
@@ -32,15 +41,6 @@ class CompetitionPrices
      * @ORM\Column(name="rank", type="boolean", nullable=true)
      */
     private $rank;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idCompetPrices", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idcompetprices;
 
 
 

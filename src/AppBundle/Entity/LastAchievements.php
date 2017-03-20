@@ -15,6 +15,15 @@ class LastAchievements
     /**
      * @var integer
      *
+     * @ORM\Column(name="idAchievement", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idachievement;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="userId", type="integer", nullable=false)
      */
     private $userid;
@@ -39,15 +48,6 @@ class LastAchievements
      * @ORM\Column(name="value", type="integer", nullable=true)
      */
     private $value;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idAchievement", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idachievement;
 
 
 

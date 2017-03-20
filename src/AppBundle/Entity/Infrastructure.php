@@ -15,6 +15,15 @@ class Infrastructure
     /**
      * @var integer
      *
+     * @ORM\Column(name="idInfrastructure", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idinfrastructure;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="typeIdInfra", type="integer", nullable=false)
      */
     private $typeidinfra;
@@ -53,15 +62,6 @@ class Infrastructure
      * @ORM\Column(name="ressourceConsumption", type="text", length=16777215, nullable=true)
      */
     private $ressourceconsumption;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idInfrastructure", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idinfrastructure;
 
 
 

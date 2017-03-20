@@ -15,6 +15,15 @@ class InfrastructureType
     /**
      * @var integer
      *
+     * @ORM\Column(name="idInfraType", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idinfratype;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="itemCapacity", type="integer", nullable=true)
      */
     private $itemcapacity;
@@ -39,15 +48,6 @@ class InfrastructureType
      * @ORM\Column(name="desc", type="text", length=16777215, nullable=false)
      */
     private $desc;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idInfraType", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idinfratype;
 
 
 

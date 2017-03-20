@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Club
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idClub", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idclub;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="capacity", type="boolean", nullable=false)
@@ -39,15 +48,6 @@ class Club
      * @ORM\Column(name="signupPrice", type="decimal", precision=10, scale=0, nullable=false)
      */
     private $signupprice;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idClub", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idclub;
 
 
 

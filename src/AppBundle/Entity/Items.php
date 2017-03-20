@@ -12,6 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Items
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idItems", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $iditems;
+
     /**
      * @var string
      *
@@ -46,15 +56,6 @@ class Items
      * @ORM\Column(name="itemTypeId", type="integer", nullable=false)
      */
     private $itemtypeid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idItems", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $iditems;
 
 
 

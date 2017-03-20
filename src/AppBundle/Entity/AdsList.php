@@ -15,6 +15,15 @@ class AdsList
     /**
      * @var integer
      *
+     * @ORM\Column(name="idAdsList", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idadslist;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="adsId", type="integer", nullable=false)
      */
     private $adsid;
@@ -25,15 +34,6 @@ class AdsList
      * @ORM\Column(name="newsPaperId", type="integer", nullable=false)
      */
     private $newspaperid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idAdsList", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idadslist;
 
 
 

@@ -15,6 +15,15 @@ class Stables
     /**
      * @var integer
      *
+     * @ORM\Column(name="idStable", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idstable;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="userId", type="integer", nullable=false)
      */
     private $userid;
@@ -25,15 +34,6 @@ class Stables
      * @ORM\Column(name="infrastructureCapacity", type="integer", nullable=false)
      */
     private $infrastructurecapacity;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idStable", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idstable;
 
 
 

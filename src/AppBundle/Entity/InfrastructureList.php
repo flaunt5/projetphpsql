@@ -15,6 +15,15 @@ class InfrastructureList
     /**
      * @var integer
      *
+     * @ORM\Column(name="idInfraList", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idinfralist;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="clubId", type="integer", nullable=true)
      */
     private $clubid;
@@ -32,15 +41,6 @@ class InfrastructureList
      * @ORM\Column(name="infrastructureId", type="integer", nullable=false)
      */
     private $infrastructureid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idInfraList", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idinfralist;
 
 
 

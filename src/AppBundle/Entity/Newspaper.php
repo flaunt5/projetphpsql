@@ -15,6 +15,15 @@ class Newspaper
     /**
      * @var integer
      *
+     * @ORM\Column(name="idNewsPaper", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idnewspaper;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="userId", type="integer", nullable=false)
      */
     private $userid;
@@ -32,15 +41,6 @@ class Newspaper
      * @ORM\Column(name="weatherId", type="integer", nullable=false)
      */
     private $weatherid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idNewsPaper", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idnewspaper;
 
 
 

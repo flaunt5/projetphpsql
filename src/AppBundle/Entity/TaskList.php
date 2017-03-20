@@ -15,6 +15,15 @@ class TaskList
     /**
      * @var integer
      *
+     * @ORM\Column(name="idTaskList", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idtasklist;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="stableId", type="integer", nullable=false)
      */
     private $stableid;
@@ -25,15 +34,6 @@ class TaskList
      * @ORM\Column(name="taskId", type="integer", nullable=false)
      */
     private $taskid;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idTaskList", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idtasklist;
 
 
 

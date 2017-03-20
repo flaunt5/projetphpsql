@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class InfrastructureFamily
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idInfraFamily", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idinfrafamily;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=32, nullable=true)
@@ -25,15 +34,6 @@ class InfrastructureFamily
      * @ORM\Column(name="desc", type="text", length=16777215, nullable=true)
      */
     private $desc;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idInfraFamily", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idinfrafamily;
 
 
 

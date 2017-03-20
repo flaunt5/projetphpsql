@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Tasks
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idTasks", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idtasks;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=32, nullable=false)
@@ -46,15 +55,6 @@ class Tasks
      * @ORM\Column(name="frequency", type="integer", nullable=false)
      */
     private $frequency;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idTasks", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idtasks;
 
 
 

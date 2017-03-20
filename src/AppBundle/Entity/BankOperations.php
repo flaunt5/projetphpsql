@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class BankOperations
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idBankOp", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idbankop;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="operationDatetime", type="datetime", nullable=false)
@@ -33,14 +42,7 @@ class BankOperations
      */
     private $bankid;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idBankOp", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idbankop;
+
 
 
 

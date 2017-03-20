@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Modifier
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="idModifier", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idmodifier;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=32, nullable=true)
@@ -32,15 +41,6 @@ class Modifier
      * @ORM\Column(name="type", type="string", length=32, nullable=false)
      */
     private $type;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idModifier", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idmodifier;
 
 
 
