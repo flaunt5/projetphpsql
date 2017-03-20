@@ -7,11 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users", indexes={@ORM\Index(name="bankId", columns={"bankId"})})
+ * @ORM\Table(name="Users", indexes={@ORM\Index(name="bankId", columns={"bankId"})})
  * @ORM\Entity
  */
 class Users
 {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idUser", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $iduser;
     /**
      * @var string
      *
@@ -117,14 +126,7 @@ class Users
      */
     private $bankid;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idUser", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $iduser;
+
 
 
 

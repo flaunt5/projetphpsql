@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Modifier
  *
- * @ORM\Table(name="modifier")
+ * @ORM\Table(name="Modifier")
  * @ORM\Entity
  */
 class Modifier
