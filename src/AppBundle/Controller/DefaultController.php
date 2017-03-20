@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -58,9 +59,8 @@ class DefaultController extends Controller
             /* Création du tableau d'ids */
             array_push($ids, array_values($result[$key1])[0]);
         }
-
+        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
         foreach ($advert as $value4){
-            $pkey = $this->getDoctrine()->getManager()->getClassMetadata(get_class($value4))->getIdentifierFieldNames();
             $pkeys = array();
             $nbpkey = 0;
             foreach ($pkey as $value3) {
@@ -87,21 +87,52 @@ class DefaultController extends Controller
         if (null === $advert) {
             throw new NotFoundHttpException("L'id " . $id1 . " n'existe pas dans la table $table");
         }
-        return $this->render('admin/ajaxViewMultipleBank.html.twig', array('table' => $result, 'column' => $column, 'ids' => $ids, 'table2' => $table, 'nbInput' => count($column)));
+        return $this->render('admin/ajaxViewMultipleBank.html.twig', array(
+            'table' => $result,
+            'column' => $column,
+            'ids' => $ids,
+            'table2' => $table,
+            'nbInput' => count($column),
+            'table_name' => $table));
     }
 
     /**
-     * @Route("/ajaxViewRow/{id1}/{table}", name="ajaxViewRow")
+     * @Route("/ajaxEditRow/{table}", name="ajaxEditRow")
      */
-    public function ajaxViewRowAction($id1, $table)
+    public function ajaxEditRowAction($table, Request $request)
     {
         $repository = $this->getDoctrine()
             ->getManager()
             ->getRepository("AppBundle:$table"); //recuperation du repo
-        $repository->findBy(array('idUser' => $id1));
-        var_show($repository);
+        $post_data = $request->request->all();
+        $post_data_lower = array();
+        foreach ($post_data as $i => $unique_data){//ajout dans le tableau postdatalower les mêmes valeurs que celles de bases mais avec la clé en minuxcue
+            $post_data_lower[strtolower($i)] = $unique_data;
+        }
+        $pkey = $this->getDoctrine()->getManager()->getClassMetadata('AppBundle\Entity\\' . $table)->getIdentifierFieldNames();
+        $pkey_generated = array();
+        foreach ($pkey as $value){
+            $pkey_generated[$value] = $post_data_lower[$value];
+        }
+        if(empty($pkey_generated))
+            return $this->render('admin/ajaxEditRow.html.twig', array(
 
-        return $this->render('admin/ajaxViewRow.html.twig', array('table' => $result, 'column' => $column));
+            ));
+        $elem = $repository->findOneBy($pkey_generated);
+        foreach ($post_data as $i => $unique_data){
+            if(!array_key_exists(strtolower($i), $pkey_generated)){
+                $func_name = 'set'.ucfirst(strtolower($i));
+                if(\DateTime::createFromFormat('Y-m-d H:i:s', $unique_data) != false){
+                    $date = new \DateTime($unique_data);
+                    $elem->$func_name($date);
+                }else
+                    $elem->$func_name($unique_data);
+            }
+        }
+        $flush = $this->getDoctrine()->getManager()->flush();
+        return $this->render('admin/ajaxEditRow.html.twig', array(
+
+        ));
     }
 
     /**

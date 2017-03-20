@@ -24,19 +24,18 @@
             {% for key2,line in table %}
                 <tr class="gradeA even" role="row">
 
-                    <td><button type="button" class="btn btn-outline btn-info viewAction editrow">Editer</button>
+                    <td><button type="button" class="btn btn-outline btn-info viewAction editrow" value="rowselect{{ key2 }}" data-toggle="modal" data-target=".bs-example-modal-lg">Editer</button>
 
                         <div class="col-lg-12"> </div>
                         <button type="button" class="btn btn-outline btn-danger">Supprimer</button></td>
                     {% for key,value in line %}
-                        <td class="rowselect">{{ value }}</td>
+                        <td class="rowselect{{ key2 }}">{{ value }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -45,18 +44,19 @@
                         <h4 class="modal-title" id="myModalLabel">Edition d'un tuple</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="" role="form">
+                        <div class="col-lg-12" id="resultAjax"></div>
+                        <form action="/ajaxEditRow/{{ table_name }}" method="post" enctype="multipart/form-data" role="form" id="formChangeRow">
                         {% for name in column %}
                             <div class="form-group">
                                 <label>Edition du champ : {{ name }}</label>
                                 <input type="text" class="form-control formjs" name="{{ name }}">
                             </div>
                         {% endfor %}
-                            <input type="submit" type="button" class="btn btn-primary" value="Sauvegarder">
+                            <input type="submit" type="button" class="btn btn-primary" value="Sauvegarder" id="submitChange">
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" >Fermer</button>
                     </div>
                 </div>
             </div>
@@ -65,17 +65,36 @@
 
     </div>
 </div>
-{{ nbInput }}
 <script>
     $(".editrow").on('click', function (e) {
-        console.debug("test");
-        var elem = $(".rowselect").first();
-        elem.addClass("text-danger");
-        elem = elem.next();
-        elem.addClass("text-danger");
-        elem = elem.next();
-        elem.addClass("text-danger");
-        elem = elem.next();
-        elem.addClass("text-danger");
+        var source = $("."+this.value).first();
+        var target = $(".formjs");
+        for(i=0; i < {{ nbInput }}; i++){
+            source.addClass("text-danger");
+            var temp = target[i];
+            temp.value = source.text();
+            source = source.next();
+        }
     });
+
+    $('#formChangeRow').on('submit', function(e) {
+        e.preventDefault();
+        var $this = $(this),
+            url = "/ajaxEditRow/{{ table_name }}";
+        $.ajax({
+            url: url,
+            method: 'POST',
+            dataType: 'html',
+            data: {
+
+            }
+        }).done(function (data) {
+            $("#resultAjax").append('<pre><p class="text-success">La mise à jour a bien été effectuée</p></pre>');
+            console.debug(data);
+        }).fail(function () {
+            $("#resultAjax").append('<pre><p class="text-danger">La mise à jour a bien été effectuée</p></pre>');
+        });
+
+    });
+
 </script>
