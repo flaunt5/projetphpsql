@@ -78,7 +78,41 @@ class DefaultController extends Controller
     public function accueilAction(Request $request)
     {
         $this->emTypeVerify();
-        return $this->render('admin/index.html.twig', array('tables' => $this->getTables()));
+
+        $account = $this->getEmTYpe();
+        if($account === "default") {
+            $account = "admin";
+        }
+        $conn = $this->getDoctrine()->getManager($this->emType)->getConnection(); //connection à la DB
+        $tables = $this->getTables();
+        $columnQuery = $conn->executeQuery("SELECT DISTINCT t.table_name, c.COLUMN_NAME FROM information_schema.TABLES t INNER JOIN information_schema.COLUMNS c ON c.table_name = t.table_name WHERE t.TABLE_SCHEMA = 'symfony_test';");
+        $columns = $columnQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $theColumns = array();
+        foreach ($columns as $colResult){
+            $theColumns[$colResult['table_name']][] = $colResult['COLUMN_NAME'];
+        }
+        $rows = $conn->executeQuery("SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'symfony_test';")->fetchAll(\PDO::FETCH_KEY_PAIR);
+        $totalRows = 0;
+        foreach ($rows as $row) {
+            $totalRows = $totalRows + $row;
+        }
+        foreach ($theColumns as $colKey => $colVal){
+            $theColumns[$colKey] = array(
+                'columns' => count($colVal),
+                'rows' => intval($rows[$colKey])
+            );
+        }
+        $totalColumns = count($columns);
+
+        $toRender = array(
+            'tables' => $tables,
+            'tablesCount' => count($tables),
+            'account' => $account,
+            'totalColumns' => $totalColumns,
+            'totalTuples' => $totalRows,
+            'totalArray' =>  $theColumns
+        );
+        return $this->render('admin/index.html.twig', $toRender);
     }
 
     /**
@@ -136,7 +170,7 @@ class DefaultController extends Controller
         }
 
 
-        $conn = $this->get('database_connection'); //connection à la DB
+        $conn = $this->getDoctrine()->getManager($this->emType)->getConnection(); //connection à la DB
         $tables = $conn->fetchAll("SELECT column_name FROM information_schema.COLUMNS WHERE table_name LIKE '$table' ORDER BY ordinal_position"); //recherche des noms de colone
         $column = array();
         foreach ($tables as $value) {//mise dans le tableau des noms de colones
@@ -273,7 +307,7 @@ class DefaultController extends Controller
     public function viewMultipleBankAjaxAction($table)
     {
         $this->emTypeVerify();
-        $conn = $this->get('database_connection')->executeQuery("SELECT COUNT(*) as nbTuples FROM $table");
+        $conn = $this->getDoctrine()->getManager($this->emType)->getConnection()->executeQuery("SELECT COUNT(*) as nbTuples FROM $table");
         $nbTuples = $conn->fetch()['nbTuples'];
         return $this->render('admin/viewMultipleBankAjax.html.twig', array('tables' => $this->getTables(), 'table' => $table, 'nbTuples' => $nbTuples));
     }
@@ -364,36 +398,6 @@ class DefaultController extends Controller
             return false;
         }
     }
-
-    /**
-     * @Route("/testUser", name="testUser")
-     */
-    public function testUser(Request $request)
-    {
-        $theUser = $this->get('security.token_storage')->getToken()->getUser();
-        if(is_string($theUser))
-        {
-            return $this->render(':default:session.html.twig', array('test' => $theUser));
-        } else {
-            $userId= $theUser->getId();
-
-            $stuff = $this->userHasRole("AppBundle", $userId, "ROLE_JOURNALISTE");
-
-            return $this->render(':default:session.html.twig', array('test' => $stuff));
-        }
-    }
-
-    /**
-     * @Route("/testEm", name="testEm")
-     */
-    public function testEm(Request $request)
-    {
-        $this->emTypeVerify();
-        $result = $this->getEmTYpe();
-
-        return $this->render(':default:session.html.twig', array('test' => $result));
-    }
-
 
 }
 

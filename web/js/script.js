@@ -2,6 +2,10 @@
  * Created by cedric on 16/02/2017.
  */
 
+$(document).ready(function () {
+    $("#hometable").tablesorter();
+})
+
 $('#submit').on('click',function (e) {
     e.preventDefault();
     var id = $('#id').val(),
