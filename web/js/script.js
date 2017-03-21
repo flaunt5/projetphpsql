@@ -2,6 +2,10 @@
  * Created by cedric on 16/02/2017.
  */
 
+$(document).ready(function () {
+    $("#hometable").tablesorter();
+})
+
 $('#submit').on('click',function (e) {
     e.preventDefault();
     var id = $('#id').val(),
@@ -15,6 +19,9 @@ $('#submit').on('click',function (e) {
     }).done(function (result) {
         $('#result').fadeOut();
         $('#result').empty().hide().append(result).fadeIn();
+        var target = $("#table").val();
+        $("#table-" + target).tablesorter();
+        $('#search_table').removeClass('hidden');
         $('button.viewAction').on('click',function(){
             var id = this.value,
                 table = this.name,
@@ -31,16 +38,15 @@ $('#submit').on('click',function (e) {
     });
 });
 
-$("#result").on('click', 'th.tablehead', function (e) {
-    var theTarget = $(e.target).parents('table').eq(0);
-    sortTable(theTarget);
-});
+// $("#result").on('click', 'th.tablehead', function (e) {
+//     var theTarget = $(e.target).parents('table').eq(0);
+//     sortTable(theTarget);
+// });
 
 // trouvé sur http://stackoverflow.com/questions/9127498/how-to-perform-a-real-time-search-and-filter-on-a-html-table
 $("input#searchInput").on('keyup', function (e) {
-
    var table = $(e.target).data("tablesearch");
-   var rows = $("table#" + table + " tr");
+   var rows = $("table#" + table + " tr.result");
    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
        reg = RegExp(val, 'i'),
        text;
@@ -65,4 +71,20 @@ function comparer(index) {
 }
 function getCellValue(row, index){
     return $(row).children('td').eq(index).html()
+}
+
+
+function reloadTable() {
+    var id = $('#id').val(),
+        offset = $('#offset').val(),
+        table = $('#table').val(),
+        url = "/ajaxViewMultipleBank/"+id+"/"+offset+'/'+table;
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'html'
+    }).done(function (result) {
+        $('#result').fadeOut();
+        $('#result').empty().hide().append(result).fadeIn();
+    });
 }
