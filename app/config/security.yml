@@ -37,4 +37,4 @@ security:
                 anonymous:    true
     access_control:
             - { path: ^/connexion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/, role: ROLE_ADMIN }
+            - { path: ^/, role: ROLE_USER }
