@@ -11,11 +11,13 @@
                aria-describedby="dataTables-example_info" style="width: 100%;">
             <thead>
             <tr role="row">
+                {% if is_granted('ROLE_EDIT') %}
                 <th class="sorting_asc" tabindex="0" aria-controls="table_test"
                     rowspan="1" colspan="1" aria-sort="ascending"
                     aria-label="Editer"
                     style="width: 161px;">Editer
                 </th>
+                {% endif %}
                 {% for name in column %}
                     <th class="sorting_asc tablehead" tabindex="0" aria-controls="table_test"
                     rowspan="1" colspan="1" aria-sort="ascending"
@@ -29,8 +31,8 @@
             <tbody>
             {% for key2,line in table %}
                 <tr class="gradeA even result" role="row">
+                    {% if is_granted('ROLE_EDIT') %}
                     <td>
-                        {% if is_granted('ROLE_EDIT') %}
                         <button type="button" class="btn btn-outline btn-info viewAction editrow"
                                 value="rowselect{{ key2 }}" data-toggle="modal" data-target="#editModal">Editer
                         </button>
@@ -40,8 +42,8 @@
                         <button type="button" class="btn btn-outline btn-danger removerow" value="rowselect{{ key2 }}"
                                 data-toggle="modal" data-target="#removeModal">Supprimer
                         </button>
-                        {% endif %}
                     </td>
+                    {% endif %}
                     {% for key,value in line %}
                         <td class="rowselect{{ key2 }}">{{ value }}</td>
                     {% endfor %}
