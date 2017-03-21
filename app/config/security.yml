@@ -14,6 +14,12 @@ security:
     role_hierarchy:
             ROLE_ADMIN:       ROLE_USER
             ROLE_SUPER_ADMIN: ROLE_ADMIN
+            ROLE_CHEVAL_ADMIN: [ROLE_SUPER_ADMIN, ROLE_EDIT, ROLE_DELETE, ROLE_INSERT]
+            ROLE_JOURNALISTE: [ROLE_USER, ROLE_EDIT]
+            ROLE_MODERATOR: [ROLE_USER, ROLE_EDIT, ROLE_DELETE]
+            ROLE_SPECIALIST: [ROLE_USER, ROLE_EDIT]
+            ROLE_COMPETITIONADMIN: [ROLE_USER, ROLE_EDIT, ROLE_DELETE, ROLE_INSERT]
+            ROLE_CLIENT: [ROLE_USER]
     firewalls:
             dev:
                 pattern: ^/(_(profiler|wdt)|css|images|js)/
